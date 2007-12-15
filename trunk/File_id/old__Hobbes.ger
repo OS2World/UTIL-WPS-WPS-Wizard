@@ -1,0 +1,38 @@
+                          Upload Information Template for Hobbes.nmsu.edu
+                          ===============================================
+
+        Archive Filename:   wpswizard-0_5_2-ger.zip
+       Short Description:    WPS-Wizard V0.5.2. freie WPS Klassen, um jedem Dateisystem-Objekt
+                                   frei konfigurierbare KontextmenÅs zuzuordnen und Werkzeugleisten und einen Informationsbereich zu Ordnern hinzuzufÅgen. REXX-Interface zur WPS.
+                                   Deutsche Version.
+        Long Description:    WPS-Wizard fÅgt frei konfigurierbare KontextmenÅs zu
+jeder Datei und jedem Ordner hinzu. Es ist mîglich,
+verschiedene MenÅs fÅr unterschiedliche Klassen zu
+haben. Die Konfiguration erfolgt Åber Drag'n drop.
+Frei programmierbare Objekt-Hilfe (Flyover help),
+Ordner-Werkzeugleisten und Ordner-Informationsbereich.
+öber eine REXX-Schnittstelle haben Benutzerskripte
+Zugriff auf die WPS. Es ist mîglich, Funktionen von
+WPS-Klassen mit REXX zu modifizieren (Ñhnlich wie
+Subclassing). Mit einem separaten Icon-PAket ist es mîglich, PNG-Icons mit der WPS zu verwenden.
+Eine umfangreiche Hilfe ist verfÅgbar.
+Deutsche Version, Freeware.
+   
+      Proposed directory
+           for placement:    
+
+               Your name:   Chris Wohlgemuth
+           Email address:   see tutorial
+    Program contact name: (same)
+   Program contact email: (same)
+             Program URL:    http://www.geocities.com/SiliconValley/Sector/5785/
+
+      Would you like the
+   contact email address
+    included in listings? yes
+
+Operating System/Version: Warp 4 and above 
+ Additional requirements:   EMX runtime libraries 0.9d fix 4, Cairo runtime libs, Innotek font engine.
+
+                Replaces: (none)
+

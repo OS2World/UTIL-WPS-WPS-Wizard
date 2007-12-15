@@ -1,0 +1,38 @@
+                          Upload Information Template for Hobbes.nmsu.edu
+                          ===============================================
+
+        Archive Filename:   wpswizard-0_6_0-eng.zip
+       Short Description:    WPS-Wizard V0.6.0. free WPS classes to add different custom menus to any filesystem object, info area and toolbars to folders. Icon engine for using PNG images. REXX interface to the WPS and much more.
+                             English version.
+        Long Description:    WPS-Wizard adds configurable context menus to every
+filesystem object of your system. You may have different
+menus for every class in addition to a set of standard
+menu items. Configuration is done using drag and drop.
+Freely programmable object fly over help, folder toolbars and folder info area. Change the toolbar
+using your mouse and drag and drop. Gadgets for displaying information on the
+desktop graphically or as text. These gadgets are small and easy to create REXX scripts. Image files are shown as their icon
+when the CW-MM classes are installed (default on eCS1.2MR and above).
+A REXX interface is provided which gives access to the WPS
+from user scripts. Modify functions of WPS classes using
+REXX (similar to subclassing). Icon engine for arbitrary sized icons (up to 200x200). Icon engine allows use of fancy PNG icons.
+Image compositing by the icon engine to create new icons without need to draw them.
+Help and tutorial included.
+English version, freeware.
+
+      Proposed directory
+           for placement:  pub/os2/util/wps   
+
+               Your name:   Chris Wohlgemuth
+           Email address:   see Readme
+    Program contact name: (same)
+   Program contact email: (same)
+             Program URL:    http://svn.netlabs.org/wps-wizard
+
+      Would you like the
+   contact email address
+    included in listings? yes
+
+Operating System/Version: eCS 1.2MR ore later 
+ Additional requirements: libc061, Cairo runtime libs1.4.6, Innotek font engine
+
+                Replaces: (none)

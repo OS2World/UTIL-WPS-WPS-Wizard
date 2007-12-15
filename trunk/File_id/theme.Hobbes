@@ -1,0 +1,25 @@
+                          Upload Information Template for Hobbes.nmsu.edu
+                          ===============================================
+
+        Archive Filename:   wpswizard-icon-addon-v1.zip
+       Short Description:   Addon classes for WPS-Wizard V0.5.2 for fancy PNG icons of arbitrary size.
+        Long Description:   This package adds theming classes to the WPS so PNG image files may be used as Icons. Cairo is used for rendering so alphablending and other nice drawing effects can be used for icons. The size for the icons can be chosen for each folder. Preview release. The well known Noia icon set by Carlitus is included.
+
+      Proposed directory
+           for placement:   pub/os2/util/wps  
+
+               Your name:   Chris Wohlgemuth
+           Email address:   see Readme
+    Program contact name: (same)
+   Program contact email: (same)
+             Program URL:    http://www.os2world.com/cdwriting/
+
+      Would you like the
+   contact email address
+    included in listings? yes
+
+Operating System/Version: Warp 4 and above or eCS 
+ Additional requirements:   EMX runtime libraries 0.9d fix 4, WPS-Wizard 0.5.2, Cairo runtime libs, Libc06.dll (for Cairo).
+
+                Replaces: (none)
+
