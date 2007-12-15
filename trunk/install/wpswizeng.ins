@@ -1,0 +1,90 @@
+[APPLICATION]
+NAME WPS-Wizard
+VERSION 0.5.2.0
+COPYRIGHT (c) Chris Wohlgemuth 1996-2004
+HOME http://www.os2world.com/cdwriting
+INTERNALNAME WPSWIZ
+TOTALSIZE 0
+INSTALLER 0.1.5.0
+DESCRIPTION WPS-Wizard adds configurable context menus to every filesystem object of your system. You may have different menus for every class in addition to a set of standard menu items. Configuration is done using drag and drop. Freely programmable object fly over help, folder toolbars and folder info area. Change the toolbar using your mouse and drag and drop. Gadgets for displaying information on the desktop graphically or as text. These gadgets are small and easy to create REXX scripts. Image files are shown as their icon when the CW-MM classes are installed. A REXX interface is provided which gives access to the WPS from user scripts. Modify functions of WPS classes using REXX (similar to subclassing). Help and tutorial included.
+
+[DESCRIPTION]
+DESCRIPTION  WPS-Wizard adds configurable context menus to every filesystem object of your system. You may have different menus for every class in addition to a set of standard menu items. Configuration is done using drag and drop. Freely programmable object fly over help, folder toolbars and folder info area. Change the toolbar using your mouse and drag and drop. Gadgets for displaying information on the desktop graphically or as text. These gadgets are small and easy to create REXX scripts. Image files are shown as their icon when the CW-MM classes are installed. A REXX interface is provided which gives access to the WPS from user scripts. Modify functions of WPS classes using REXX (similar to subclassing). Help and tutorial included.
+
+[CLASSES]
+CWWizzSettings, %TARGET%\menufldr.dll, 
+CWMenuFolder, %TARGET%\menufldr.dll, 
+CWLaunchArea, %TARGET%\menufldr.dll, 
+CWObject, %TARGET%\wpswizz.dll, WPObject
+CWFolder, %TARGET%\wpswizz.dll, WPFolder
+CWDisk, %TARGET%\wpswizz.dll, WPDisk
+
+[OBJECTS]
+WPS Wizardõ,õ <WPSWIZ_FOLDER>õ,õ WPFolderõ,õ <WP_DESKTOP>õ,õ ICONFILE=%TARGET%\res\wizfol1.ico;ICONNFILE=1,%TARGET%\res\wizfol2.ico;OPEN=DEFAULTõ,õ update
+WPS Wizard ^configurationõ,õ <WPSWIZ_SETTINGS>õ,õ CWWizzSettingsõ,õ <WPSWIZ_FOLDER>õ,õ DEFAULTVIEW=SETTINGSõ,õ update
+WPS Wizard ^configurationõ,õ <WPSWIZ_SETTINGS_SHW>õ,õ WPShadowõ,õ <WP_CONFIG>õ,õ SHADOWID=<WPSWIZ_SETTINGS>õ,õ update
+Tutorialõ,õ <WPSWIZ_TUTORIAL>õ,õ WPProgramõ,õ <WPSWIZ_FOLDER>õ,õ EXENAME=view.exe;PARAMETERS=%TARGET%\Help\menuwizz.infõ,õ update
+Menu configurationõ,õ <WPSWIZ_MENUCONFIG>õ,õ WPFolderõ,õ <WPSWIZ_FOLDER>õ,õ DEFAULTVIEW=TREE;SHOWALLINTREEVIEW=YESõ,õ update
+Menu for datafilesõ,õ <MENU_WPDataFile>õ,õ CWMenuFolderõ,õ <WPSWIZ_MENUCONFIG>õ,õ CLEARMENUCACHE=1;SHOWALLINTREEVIEW=YES;DEFAULTVIEW=ICON;ICONVIEW=NONFLOWED,MINIõ,õ update
+Copy ~filenameõ,õ <WPSWIZ_DFMENU_COPYNAME>õ,õ WPProgramõ,õ <MENU_WPDataFile>õ,õ EXENAME=%TARGET%\bin\copyname.exe;PARAMETERS="%*";MINVIEW=HIDE;CCVIEW=YES;MINIMIZED=YES;ICONFILE=%TARGET%\res\MWDAT.icoõ,õ replace
+~Zip this fileõ,õ <WPSWIZ_DFMENU_ZIP>õ,õ WPProgramõ,õ <MENU_WPDataFile>õ,õ EXENAME=%TARGET%\bin\zipthis.cmd;PARAMETERS="%*";MINVIEW=HIDE;CCVIEW=YES;MINIMIZED=YES;ICONFILE=%TARGET%\res\MWDAT.icoõ,õ replace
+Menu for foldersõ,õ <MENU_WPFolder>õ,õ CWMenuFolderõ,õ <WPSWIZ_MENUCONFIG>õ,õ CLEARMENUCACHE=1;SHOWALLINTREEVIEW=YES;DEFAULTVIEW=ICON;ICONVIEW=NONFLOWED,MINIõ,õ update
+Copy ~filenameõ,õ <WPSWIZ_FLDRMENU_COPYNAME>õ,õ WPProgramõ,õ <MENU_WPFolder>õ,õ EXENAME=%TARGET%\bin\copyname.exe;PARAMETERS="%*";MINVIEW=HIDE;CCVIEW=YES;MINIMIZED=YES;ICONFILE=%TARGET%\res\MWFOL.icoõ,õ replace
+~Zip this treeõ,õ <WPSWIZ_FLDRMENU_ZIP>õ,õ WPProgramõ,õ <MENU_WPFolder>õ,õ EXENAME=%TARGET%\bin\ziptree.cmd;PARAMETERS="%*";MINVIEW=HIDE;CCVIEW=YES;MINIMIZED=YES;ICONFILE=%TARGET%\res\MWFOL.icoõ,õ replace
+~Drivesõ,õ <WPSWIZ_FLDRMENU_DRIVES>õ,õ WPShadowõ,õ <MENU_WPFolder>õ,õ SHADOWID=<WP_DRIVES>õ,õ replace
+Command ~linesõ,õ <WPSWIZ_FLDRMENU_CMDLINES>õ,õ CWMenuFolderõ,õ <MENU_WPFolder>õ,õ DEFAULTVIEW=ICON;SHOWALLINTREEVIEW=YES;ICONVIEW=NONFLOWED,MINIõ,õ replace
+OS/2 ~Windowõ,õ <WPSWIZ_FLDRMENU_CMDWIN>õ,õ WPProgramõ,õ <WPSWIZ_FLDRMENU_CMDLINES>õ,õ EXENAME=*;PARAMETERS=%;PROGTYPE=WINDOWABLEVIO;CCVIEW=YESõ,õ replace
+OS/2 ~Fullscreenõ,õ <WPSWIZ_FLDRMENU_CMDFULL>õ,õ WPProgramõ,õ <WPSWIZ_FLDRMENU_CMDLINES>õ,õ EXENAME=*;PARAMETERS=%;PROGTYPE=FULLSCREEN;CCVIEW=YESõ,õ replace
+D~OS Windowõ,õ <WPSWIZ_FLDRMENU_DOSWIN>õ,õ WPProgramõ,õ <WPSWIZ_FLDRMENU_CMDLINES>õ,õ EXENAME=*;PARAMETERS=%;PROGTYPE=WINDOWEDVDM;CCVIEW=YESõ,õ replace
+D~OS Fullscreenõ,õ <WPSWIZ_FLDRMENU_DOSFULL>õ,õ WPProgramõ,õ <WPSWIZ_FLDRMENU_CMDLINES>õ,õ EXENAME=*;PARAMETERS=%;PROGTYPE=VDM;CCVIEW=YESõ,õ replace
+Scripts for foldersõ,õ <SKRIPTS_WPFolder>õ,õ CWMenuFolderõ,õ <WPSWIZ_MENUCONFIG>õ,õ CLEARMENUCACHE=1;SHOWALLINTREEVIEW=YES;DEFAULTVIEW=ICON;ICONVIEW=NONFLOWED,MINI;HIDECLASSPAGE=1õ,õ replace
+How to ~use scriptsõ,õ <WPSWIZ_FLDRMENU_HOWSCR>õ,õ WPProgramõ,õ <SKRIPTS_WPFolder>õ,õ EXENAME=%TARGET%\bin\scripts;MINVIEW=HIDE;CCVIEW=YES;MINIMIZED=YESõ,õ replace
+Example ~1õ,õ <WPSWIZ_FLDRMENU_EXMPL1>õ,õ WPProgramõ,õ <SKRIPTS_WPFolder>õ,õ EXENAME=%TARGET%\bin\example1.cmd;MINVIEW=HIDE;CCVIEW=YES;MINIMIZED=YESõ,õ replace
+Example ~2õ,õ <WPSWIZ_FLDRMENU_EXMPL2>õ,õ WPProgramõ,õ <SKRIPTS_WPFolder>õ,õ EXENAME=%TARGET%\bin\example2.cmd;MINVIEW=HIDE;CCVIEW=YES;MINIMIZED=YESõ,õ replace
+Menu templatesõ,õ <WPSWIZ_FOLDER_MENUTMPLS>õ,õ WPFolderõ,õ <WPSWIZ_FOLDER>õ,õ ICONFILE=%TARGET%\res\templ1.ico;ICONNFILE=1,%TARGET%\res\templ2.icoõ,õ update
+Menu folderõ,õ <WPSWIZ_TMPL_MENUFLDR>õ,õ CWMenuFolderõ,õ <WPSWIZ_FOLDER_MENUTMPLS>õ,õ TEMPLATE=YESõ,õ replace
+Copy ~filenameõ,õ <WPSWIZ_TMPL_COPYNAME>õ,õ WPProgramõ,õ <WPSWIZ_FOLDER_MENUTMPLS>õ,õ EXENAME=%TARGET%\bin\copyname.exe;PARAMETERS="%*";MINIMIZED=YES;MINVIEW=HIDE;CCVIEW=YES;TEMPLATE=YESõ,õ replace
+~Zip this fileõ,õ <WPSWIZ_TMPL_DFZIP>õ,õ WPProgramõ,õ <WPSWIZ_FOLDER_MENUTMPLS>õ,õ EXENAME=%TARGET%\bin\zipthis.cmd;PARAMETERS="%*";MINVIEW=HIDE;CCVIEW=YES;TEMPLATE=YES;ICONFILE=%TARGET%\Res\MWDAT.icoõ,õ replace
+~Zip this treeõ,õ <WPSWIZ_TMPL_FLDRZIP>õ,õ WPProgramõ,õ <WPSWIZ_FOLDER_MENUTMPLS>õ,õ EXENAME=%TARGET%\bin\ziptree.cmd;PARAMETERS="%*";MINVIEW=HIDE;CCVIEW=YES;TEMPLATE=YES;ICONFILE=%TARGET%\Res\MWFOL.icoõ,õ replace
+Toolbar buttonsõ,õ <WPSWIZ_FOLDER_TBITEMS>õ,õ WPFolderõ,õ <WPSWIZ_FOLDER>õ,õ õ,õ update
+Open parentõ,õ <WPSWIZ_TBITEM_OPENPARENT>õ,õ WPProgramõ,õ <WPSWIZ_FOLDER_TBITEMS>õ,õ EXENAME=%TARGET%\bin\toolbar\parent.cmd;MINIMIZED=YES;MINVIEW=HIDE;CCVIEW=YES;ICONFILE=%TARGET%\res\parent.icoõ,õ replace
+Settingsõ,õ <WPSWIZ_TBITEM_SETTINGS>õ,õ WPProgramõ,õ <WPSWIZ_FOLDER_TBITEMS>õ,õ EXENAME=%TARGET%\bin\toolbar\settings.cmd;MINIMIZED=YES;MINVIEW=HIDE;CCVIEW=YES;ICONFILE=%TARGET%\res\properties.icoõ,õ replace
+OS/2 windowõ,õ <WPSWIZ_TBITEM_CMDWIN>õ,õ WPProgramõ,õ <WPSWIZ_FOLDER_TBITEMS>õ,õ EXENAME=%TARGET%\bin\toolbar\cmdwin.cmd;CCVIEW=YESõ,õ replace
+Wide OS/2 windowõ,õ <WPSWIZ_TBITEM_CMDWINWIDE>õ,õ WPProgramõ,õ <WPSWIZ_FOLDER_TBITEMS>õ,õ EXENAME=%TARGET%\bin\toolbar\widecmd.cmd;CCVIEW=YESõ,õ replace
+Refreshõ,õ <WPSWIZ_TBITEM_REFRESH>õ,õ WPProgramõ,õ <WPSWIZ_FOLDER_TBITEMS>õ,õ EXENAME=%TARGET%\bin\toolbar\refresh.cmd;MINIMIZED=YES;MINVIEW=HIDE;CCVIEW=YES;ICONFILE=%TARGET%\res\refresh.icoõ,õ replace
+Details viewõ,õ <WPSWIZ_TBITEM_DETAILS>õ,õ WPProgramõ,õ <WPSWIZ_FOLDER_TBITEMS>õ,õ EXENAME=%TARGET%\bin\toolbar\details.cmd;MINIMIZED=YES;MINVIEW=HIDE;CCVIEW=YES;ICONFILE=%TARGET%\res\details.icoõ,õ replace
+Icon viewõ,õ <WPSWIZ_TBITEM_ICON>õ,õ WPProgramõ,õ <WPSWIZ_FOLDER_TBITEMS>õ,õ EXENAME=%TARGET%\bin\toolbar\icon.cmd;MINIMIZED=YES;MINVIEW=HIDE;CCVIEW=YES;ICONFILE=%TARGET%\res\icon.icoõ,õ replace
+OS/2 fullscreenõ,õ <WPSWIZ_TBITEM_CMDFULL>õ,õ WPProgramõ,õ <WPSWIZ_FOLDER_TBITEMS>õ,õ EXENAME=%TARGET%\bin\toolbar\cmdfull.cmd;MINIMIZED=YES;MINVIEW=HIDE;CCVIEW=YES;ICONFILE=%TARGET%\res\cmdfull.icoõ,õ replace
+Select allõ,õ <WPSWIZ_TBITEM_SELECTALL>õ,õ WPProgramõ,õ <WPSWIZ_FOLDER_TBITEMS>õ,õ EXENAME=%TARGET%\bin\toolbar\selall.cmd;MINIMIZED=YES;MINVIEW=HIDE;CCVIEW=YES;ICONFILE=%TARGET%\res\program.icoõ,õ replace
+Deselect allõ,õ <WPSWIZ_TBITEM_DESELALL>õ,õ WPProgramõ,õ <WPSWIZ_FOLDER_TBITEMS>õ,õ EXENAME=%TARGET%\bin\toolbar\deselall.cmd;MINIMIZED=YES;MINVIEW=HIDE;CCVIEW=YES;ICONFILE=%TARGET%\res\program.icoõ,õ replace
+fldractionõ,õ <WPSWIZ_FLDRACTION>õ,õ CWLaunchAreaõ,õ %TARGET%õ,õ õ,õ replace
+fldrlaunchpadõ,õ <WPSWIZ_FLDRLAUNCHPAD>õ,õ CWLaunchAreaõ,õ %TARGET%õ,õ õ,õ replace
+Gadgetsõ,õ <WPSWIZ_FOLDER_GADGETS>õ,õ WPFolderõ,õ <WPSWIZ_FOLDER>õ,õ ICONFILE=%TARGET%\res\gadfol1.ico;ICONNFILE=1,%TARGET%\res\Gadfol2.icoõ,õ update
+Time and dateõ,õ <WPSWIZ_GADGET_TIMEDATE>õ,õ WPProgramõ,õ <WPSWIZ_FOLDER_GADGETS>õ,õ EXENAME=%TARGET%\bin\gadgets\timegadget.cmd;MINIMIZED=YES;MINVIEW=HIDE;CCVIEW=YES;ICONFILE=%TARGET%\res\program.ico;õ,õ replace
+System^Informationõ,õ <WPSWIZ_GADGET_SYSINFO>õ,õ WPProgramõ,õ <WPSWIZ_FOLDER_GADGETS>õ,õ EXENAME=%TARGET%\bin\gadgets\sysinfo.cmd;MINIMIZED=YES;MINVIEW=HIDE;CCVIEW=YES;ICONFILE=%TARGET%\res\program.ico;õ,õ replace
+Drive^Informationõ,õ <WPSWIZ_GADGET_DRIVEINFO>õ,õ WPProgramõ,õ <WPSWIZ_FOLDER_GADGETS>õ,õ EXENAME=%TARGET%\bin\gadgets\driveinfo.cmd;MINIMIZED=YES;MINVIEW=HIDE;CCVIEW=YES;ICONFILE=%TARGET%\res\program.ico;õ,õ replace
+z!-Infoõ,õ <WPSWIZ_GADGET_ZINFO>õ,õ WPProgramõ,õ <WPSWIZ_FOLDER_GADGETS>õ,õ EXENAME=%TARGET%\bin\gadgets\z-info.cmd;MINIMIZED=YES;MINVIEW=HIDE;CCVIEW=YES;ICONFILE=%TARGET%\res\program.ico;õ,õ replace
+Calendarõ,õ <WPSWIZ_GADGET_CALENDAR>õ,õ WPProgramõ,õ <WPSWIZ_FOLDER_GADGETS>õ,õ EXENAME=%TARGET%\bin\gadgets\monthGadget.cmd;MINIMIZED=YES;MINVIEW=HIDE;CCVIEW=YES;ICONFILE=%TARGET%\res\program.ico;õ,õ replace
+File monitorõ,õ <WPSWIZ_GADGET_FILEMON>õ,õ WPProgramõ,õ <WPSWIZ_FOLDER_GADGETS>õ,õ EXENAME=%TARGET%\bin\gadgets\filemonGadget.cmd;MINIMIZED=YES;MINVIEW=HIDE;CCVIEW=YES;ICONFILE=%TARGET%\res\program.ico;õ,õ replace
+Binary clockõ,õ <WPSWIZ_GADGET_BINARYCLOCK>õ,õ WPProgramõ,õ <WPSWIZ_FOLDER_GADGETS>õ,õ EXENAME=%TARGET%\bin\gadgets\binaryclockGadget.cmd;MINIMIZED=YES;MINVIEW=HIDE;CCVIEW=YES;ICONFILE=%TARGET%\res\program.ico;õ,õ replace
+
+[UPDATEOBJECTS]
+<WPSWIZ_FLDRACTION>õ,õ FPOBJECTS=<WPSWIZ_TBITEM_OPENPARENT>,<WPSWIZ_TBITEM_SETTINGS>,<WPSWIZ_TBITEM_ICON>,<WPSWIZ_TBITEM_DETAILS>,<WPSWIZ_TBITEM_REFRESH>,<WPSWIZ_TBITEM_CMDWINWIDE>
+<WPSWIZ_FLDRLAUNCHPAD>õ,õ FPOBJECTS=<WPSWIZ_SETTINGS>,<WPSWIZ_FOLDER>,<WPSWIZ_TUTORIAL>,<WP_DRIVES>,<WP_CONFIG>
+
+[SKRIPTS]
+BEFOREINST õ,õ 
+AFTERCLASSES õ,õ /* Remove old CWLaunchArea folders */;;call SysDestroyObject("<WPSWIZ_FLDRACTION>");call SysDestroyObject("<WPSWIZ_FLDRLAUNCHPAD>");;rc=0
+AFTEROBJECTS õ,õ /**/;;call RxMessageBox "The new classes are installed. You have to restart the WPS to use them after the installation program has finished.", "Information", "OK", "INFORMATION"
+SELECTPAGESETUP õ,õ SKRIPTLIST._SELECTPAGE
+
+[INSTALLPROFILES]
+WPSWIZ õ,õ WPS-Wizard Base package õ,õ WPS-wizard classes offerring menu enhancements and REXX support.
+
+[WPSWIZ]
+WPSWIZ, , ,S,[ ], wpswizeng.ins
+
+[DEFAULTTARGET]
+PATH c:\WPS-wizard-0_5_2
+
+

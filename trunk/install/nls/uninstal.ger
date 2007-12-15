@@ -1,0 +1,21 @@
+GetStrings:
+nlsStrings.1='0d'x||'0a'x||'[31;1;m Jetzt ALLE offenen Ordner schlie·en![0;m'||'0d'x||'0a'x||'0d'x||'0a'x||'<ENTER> zum Deinstallieren oder Ctrl-c fÅr Abbruch.'
+nlsStrings.2='Aktuelles Verzeichnis ist '
+nlsStrings.3='Lîsche Konfigurationsnotizbuch...'
+nlsStrings.4='Konfigurationsnotizbuch kann nicht gelîscht werden!'
+nlsStrings.5='Lîsche "EinfÅhrung in WPS-Wizard"...'
+nlsStrings.6='"EinfÅhrung in WPS-Wizard" kann nicht gelîscht werden!'
+nlsStrings.7='Deregistriere Klasse '
+nlsStrings.8='Fehler beim Deregistrieren der Klasse '
+nlsStrings.9='Lîsche Konfigurationsordner...'
+nlsStrings.10='Lîsche Programmordner...'
+nlsStrings.11='Programmordner kann nicht gelîscht werden!'
+nlsStrings.12='<ENTER>, um die Deinstallation abzuschlie·en.'
+nlsStrings.13='<ENTER>, um fortzufahren.'
+nlsStrings.14='Die WPS wird nun neu gestartet.'
+nlsStrings.15='Teil 2 der Deinstallation wird beim WPS-Start durchgefÅhrt.'
+
+/* # of strings */
+nlsStrings.0=15
+
+return
