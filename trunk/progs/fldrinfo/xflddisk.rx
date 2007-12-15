@@ -1,0 +1,64 @@
+/* rexx -  Default script for cwmmdisk. This is a replacement class for WPDisk. */
+
+call RxFuncAdd 'SysLoadFuncs', 'RexxUtil', 'SysLoadFuncs'
+call SysLoadFuncs
+
+SELECT
+WHEN ARG(1)="/OBJECTINFO" THEN DO
+	PARSE SOURCE . . theScript
+
+	iniPath=getIni()
+	call getNLS
+
+	thePath=FILESPEC("drive",theScript)||FILESPEC("path", theScript)||"dfhint.rx"
+	theHintCmd='call  "'||thePath||'" 'ARG(2)
+	interpret theHintCmd
+	if result\="" then EXIT result" "
+
+	drive=RIGHT(WPSWizCallWPSFunc("wpQueryObjectID", ARG(2)),2)
+	drive=LEFT(drive, 1)
+
+	/* Skip Floppy drives*/
+	IF VERIFY(TRANSLATE(drive), "CDEFGHIJKLMNOPQRSTUVWXYZ")\=0 THEN EXIT " "
+
+	dinfo=SysDriveInfo(drive":");
+
+	if dinfo="" THEN return " "
+	PARSE VAR dinfo dr free total theName
+
+
+	IF theName="" THEN
+		theString="<h1>"||WPSWizCallWPSFunc("wpQueryTitle", ARG(2))||"</h1>"
+	ELSE
+		theString="<h1>"||WPSWizCallWPSFunc("wpQueryTitle", ARG(2))||" ("||STRIP(theName)||")</h1>"
+
+	theString=theString||"<p>"||TRUNC(free/1024/1024)||" MB "||nls._free||"</p>"
+	theString=theString||"<p>"||TRUNC(total/1024/1024)||" MB "||nls._total||"</p>"
+
+	EXIT theString" "
+
+END
+OTHERWISE
+	return ARG(3)
+END
+EXIT ARG(3)
+
+
+getIni:
+
+iniPath=FILESPEC("drive",theScript)||FILESPEC("path", theScript)
+iniPath=LEFT(iniPath, LENGTH(iniPath)-1)
+
+iniPath=FILESPEC("drive",iniPath)||FILESPEC("path", iniPath)
+iniPath=LEFT(iniPath, LENGTH(iniPath)-1)
+
+iniPath=FILESPEC("drive",iniPath)||FILESPEC("path", iniPath)
+
+return iniPath||"help\objhints.ini"
+
+getNLS:
+
+nls._free=SysIni(iniPath, "nls", "free")
+nls._total=SysIni(iniPath, "nls", "total")
+
+return

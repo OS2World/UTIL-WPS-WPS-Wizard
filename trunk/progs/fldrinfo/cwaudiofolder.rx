@@ -1,0 +1,156 @@
+/* rexx -  Default REXX script handling folder callbacks of
+           WPS-Wizard */
+
+call RxFuncAdd 'SysLoadFuncs', 'RexxUtil', 'SysLoadFuncs'
+call SysLoadFuncs
+
+theObject=ARG(2)
+
+SELECT
+WHEN ARG(1)="/OBJECTINFO" THEN DO
+	/* Get title of object */
+	theString="<h1>"||TRANSLATE(WPSWizCallWPSFunc("wpQueryTitle", theObject), ' ',D2C(10) )||"</h1>"
+
+	/* Find object info in ini */
+	PARSE SOURCE . . theScript
+
+	iniPath=getIni()
+	call getNLS
+
+	theId=WPSWizCallWPSFunc("wpQueryObjectID", theObject)
+	if theId\="(null)" THEN DO
+		iniValue=SysIni(iniPath, theId, "hint")
+		if iniValue\="ERROR:" then DO
+			iniValue=TRANSLATE(iniValue, ' ',D2C(10) )
+			theString=theString||"<p>"||iniValue||"</p>"
+			EXIT theString||" "
+		END
+	END
+	EXIT theString||" "
+END
+WHEN ARG(1)="/FOLDERINFO" THEN DO
+	PARSE SOURCE . . theScript
+
+	theString="<h1>"||TRANSLATE(WPSWizCallFunc("cwQueryRealName", ARG(2), 0), ' ',D2C(10) )||"</h1>"
+
+	iniPath=getIni()
+
+	call getNLS
+
+	/* Find object info in ini */
+	theId=WPSWizCallWPSFunc("wpQueryObjectID", theObject)
+	if theId\="(null)" THEN DO
+		iniValue=SysIni(iniPath, theId, "hint")
+		if iniValue\="ERROR:" then DO
+			iniValue=TRANSLATE(iniValue, ' ',D2C(10) )
+			theString=theString||"<p>"||LEFT(iniValue,LENGTH(iniValue)-1)||"</p><hr>"
+		END
+	END
+	/* Add folder actions for this folder */
+	theString=theString||"<p>"||nls._acdcreator||"</p>"
+	theString=theString||"<9 1><p><a 2>"||nls._cdwriting||"</a></p>"
+	theString=theString||"<p><a 4>"||nls._adctutorial||"</a></p><10>"
+	theString=theString||"<p>"||nls._howdoi||"</p>"
+	theString=theString||"<9 1><p><a 5>"||nls._createaudio||"</a></p>"
+	theString=theString||"<p><a 6>"||nls._writemp3||"</a></p><10><hr>"
+
+	/* Drives link */
+	theString=theString||"<9 1><p><a 1>"||nls._drives||"</a></p><10><hr>"
+
+	DROP nls.
+
+	EXIT theString" "
+END
+WHEN ARG(1)="/INFOWINDOWEVENT" THEN DO
+    /* This callback is called with only 3 parameters!
+ 
+    ARG(1): The callback indentifier. In this case /INFOWINDOWEVENT
+    ARG(2): The object pointer
+    ARG(3): Deafult return code
+    ARG(4): A composite argument
+
+    */
+	PARSE SOURCE . . theScript
+	PARSE VALUE ARG(4) WITH cmd id hwndInfo hwndFrame
+	/* cmd: the event. Currently only COMMAND 
+	   id:  id of the link which caused the event
+           hwnd: window handle of window holding the info text with the link
+           hwndFrame: frame handle of the folder
+	*/
+	iniPath=getIni()
+	call getNLS
+
+	SELECT
+	WHEN id=1 then call sysSetObjectData "<WP_DRIVES>", "OPEN=DEFAULT"
+
+	WHEN id=2 then call sysSetObjectData "<CD_WRITING>", "OPEN=DEFAULT"
+
+	WHEN id=3 then call sysSetObjectData "<WPSWIZ_FOLDER>", "OPEN=DEFAULT"
+	WHEN id=4 then call sysSetObjectData "<CWCREATOR_TUTORIAL>", "OPEN=DEFAULT"
+	WHEN id=5 then DO
+		call getClass "CWAUDIOFOLDER"
+		if found=1 THEN DO
+			tutorial=FILESPEC("drive", thePath)||FILESPEC("path", thePath)||"help\tutorial.inf"
+			ADDRESS CMD 'start view '||tutorial||" "||nls._caudiochapter
+		END
+	END
+	WHEN id=6 then DO
+		call getClass "CWDATAFOLDER"
+		if found=1 THEN DO
+			tutorial=FILESPEC("drive", thePath)||FILESPEC("path", thePath)||"help\tutorial.inf"
+			ADDRESS CMD 'start view '||tutorial||" "||nls._wmp3chapter
+		END
+	END
+	OTHERWISE
+		NOP
+	END
+
+END
+OTHERWISE
+	return ARG(3)
+END
+
+EXIT ARG(3)
+
+
+getIni:
+
+iniPath=FILESPEC("drive",theScript)||FILESPEC("path", theScript)
+iniPath=LEFT(iniPath, LENGTH(iniPath)-1)
+
+iniPath=FILESPEC("drive",iniPath)||FILESPEC("path", iniPath)
+iniPath=LEFT(iniPath, LENGTH(iniPath)-1)
+
+iniPath=FILESPEC("drive",iniPath)||FILESPEC("path", iniPath)
+
+return iniPath||"help\objhints.ini"
+
+getClass:
+
+	found=0
+	ret=SysQueryClassList('classes.')
+	DO cls=1 to classes.0
+		theclass=WORD(classes.cls, 1)
+		thePath=SUBWORD(classes.cls, 2)
+		IF TRANSLATE(theClass)=TRANSLATE(ARG(1)) THEN DO
+			found=1	
+			LEAVE
+		END
+	END
+return
+
+
+getNLS:
+
+nls._drives=SysIni(iniPath, "nls", "drives")
+nls._cdwriting=SysIni(iniPath, "nls", "cdwriting")
+nls._acdcreator=SysIni(iniPath, "nls", "acdcreator")
+nls._adctutorial=SysIni(iniPath, "nls", "adctutorial")
+nls._howdoi=SysIni(iniPath, "nls", "howdoi")
+nls._createaudio=SysIni(iniPath, "nls", "createaudio")
+
+nls._caudiochapter=SysIni(iniPath, "nls", "caudiochapter") /* The chapter in the tutorial */
+nls._writemp3=SysIni(iniPath, "nls", "writemp3")
+nls._wmp3chapter=SysIni(iniPath, "nls", "wmp3chapter") /* The chapter in the tutorial */
+
+return

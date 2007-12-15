@@ -1,0 +1,35 @@
+/* Open REXX topic in the tutorial */
+
+call RxFuncAdd 'SysLoadFuncs', 'RexxUtil', 'SysLoadFuncs'
+call SysLoadFuncs
+
+/* Check if we are executing */
+if ARG(1)\='/EXECUTE' THEN EXIT
+
+/* The folder running this skript */
+theFldr=ARG(2)
+/* And the frame handle */
+frameHandle=ARG(3)
+
+list.0=0
+found=0
+rc=SysQueryClassList(list.)
+DO a=1 to list.0
+	if TRANSLATE(WORD(list.a,1))='CWWIZZSETTINGS' THEN DO
+		found=1
+		thePath=SUBWORD(list.a,2)
+		LEAVE
+	END
+END
+
+IF found=0 THEN DO
+	rc=RxMessageBox("Cannot find WPS-Wizard Settings. Exiting...", "",'OK', "Information")
+	EXIT
+END
+
+thePath=FILESPEC('drive',thePath)||FILESPEC('path',thePAth)||"help\menuwizz.inf"
+
+ADDRESS CMD 'view '||thePath||' REXX'
+
+return
+

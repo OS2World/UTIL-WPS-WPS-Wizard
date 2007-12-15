@@ -1,0 +1,23 @@
+GetStrings:
+nlsStrings.1="Creating configuration folder..."
+nlsStrings.2='Can''t create the folder.'
+nlsStrings.3='Can''t create item.'
+nlsStrings.4="Menu for folders"
+nlsStrings.5="Copy ~filename"
+nlsStrings.6="~Zip this tree"
+nlsStrings.7="~Drives"
+nlsStrings.8="Command ~lines"
+nlsStrings.9="OS/2-~Window"
+nlsStrings.10="OS/2-~Fullscreen"
+nlsStrings.11="D~OS-Window"
+nlsStrings.12="DOS-Full~screen"
+nlsStrings.13="Scripts for folders"
+nlsStrings.14="How to ~use scripts"
+nlsStrings.15="Example ~1"
+nlsStrings.16="Example ~2"
+
+/* # of strings */
+nlsStrings.0=16
+
+return
+

@@ -1,0 +1,59 @@
+/* rexx -  Default script for MMMP3. Install the CW-Multimedia classes
+           to use the features of this script. */
+
+call RxFuncAdd 'SysLoadFuncs', 'RexxUtil', 'SysLoadFuncs'
+call SysLoadFuncs
+
+SELECT
+WHEN ARG(1)="/OBJECTINFO" THEN DO
+	PARSE SOURCE . . theScript
+
+	iniPath=getIni()
+	call getNLS
+
+	theString="<h1>"||WPSWizCallFunc("cwQueryRealName", ARG(2), 0)||"</h1><p>"
+
+	track=MMClsCallFunc("cwmmQueryTrackInfo", ARG(2), 1)
+	if track\="ERROR:" THEN
+		theString=theString||track||"<br>"
+	track=MMClsCallFunc("cwmmQueryTrackInfo", ARG(2), 2)
+	if track\="ERROR:" THEN
+		theString=theString||"     "||nls._by||" "||track||"</p>"
+
+	sec=MMClsCallFunc("cwmmQueryTrackInfo", ARG(2), 7)
+	theString=theString||"<p>"||sec % 60||":"RIGHT( "00"||sec//60,2)||" min<br>"
+	channel=MMClsCallFunc("cwmmQueryTrackInfo", ARG(2), 10)
+	IF channel=1 THEN
+		theString=theString||"1 "||nls._channel
+	ELSE
+		theString=theString||channel||" "||nls._channels
+	EXIT theString"</p> "
+END
+
+
+OTHERWISE
+	return ARG(3)
+END
+
+EXIT ARG(3)
+
+getIni:
+
+iniPath=FILESPEC("drive",theScript)||FILESPEC("path", theScript)
+iniPath=LEFT(iniPath, LENGTH(iniPath)-1)
+
+iniPath=FILESPEC("drive",iniPath)||FILESPEC("path", iniPath)
+iniPath=LEFT(iniPath, LENGTH(iniPath)-1)
+
+iniPath=FILESPEC("drive",iniPath)||FILESPEC("path", iniPath)
+
+return iniPath||"help\objhints.ini"
+
+getNLS:
+
+nls._by=SysIni(iniPath, "nls", "by")
+nls._channel=SysIni(iniPath, "nls", "channel")
+nls._channels=SysIni(iniPath, "nls", "channels")
+
+return
+

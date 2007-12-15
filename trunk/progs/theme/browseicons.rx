@@ -1,0 +1,83 @@
+/* rexx - Create a folder with objects showing all the icons
+   we have.
+ 
+   This script is part of the icon theme package. An add on
+   for WPS-Wizard.
+
+   (c) Chris Wohlgemuth 2007
+
+*/
+
+call RxFuncAdd 'SysLoadFuncs', 'RexxUtil', 'SysLoadFuncs'
+call SysLoadFuncs
+
+/* Find install dir */
+call SysQueryClassList "liste."
+do i = 1 to liste.0
+	PARSE VAR liste.i cls thePAth
+	IF cls="CWThemeObject" THEN LEAVE
+end
+
+thePath=FILESPEC("d", thePath)||FILESPEC("p", thePath)
+SAY thePath
+
+INIFILE=sysIni('USER' , 'IconTheme', 'IconFolder')
+INIFILE=STRIP(TRANSLATE(INIFILE, ' ', '00'x))
+if RIGHT(INIFILE, 1)<>'\' THEN INIFILE=INIFILE||"\"
+INIFILE=INIFILE||"wpswiz-theme.ini"
+
+/* Find temp dir */
+tempDir=getTempDir()
+/* Remove trailing '\' if any */
+if RIGHT(tempDir, LENGTH(tempDir))='\' THEN TempDir=LEFT(tempDir, LENGTH(tempDir)-1)
+
+/* Create folder holding the icons */
+rc=SysCreateObject("WPFolder", "Icons", tempDir, "", "u");
+
+
+call SysSetObjectData tempDir||"\Icons", "ICONVIEW=FLOWED"
+
+call SysSetObjectData tempDir||"\Icons", "OPEN=DEFAULT"
+/* Bring it to the front */
+call SysSetObjectData tempDir||"\Icons", "OPEN=DEFAULT"
+
+/* Create an object for each icon we know */
+rc = SysIni( INIFILE, 'ALL:', 'icons') 
+DO a=1 to icons.0
+  
+  if SysIni( INIFILE, icons.a, "Image") <>"ERROR:" THEN
+	rc=SysCreateObject("CWThemeTransient", icons.a, tempDir||"\Icons", "ICONNAMETEMP="||icons.a, "u");
+  ELSE
+  if SysIni( INIFILE, icons.a, "Surface") <>"ERROR:" THEN
+	rc=SysCreateObject("CWThemeTransient", icons.a, tempDir||"\Icons", "ICONNAMETEMP="||icons.a, "u");
+end
+
+rc=SysSetObjectData(tempDir||"\Icons", "MENUITEMSELECTED=503");
+
+/*call SysSetObjectData tempDir||"\Icons", "OPEN=DEFAULT"*/
+/* Bring it to the front */
+/*call SysSetObjectData tempDir||"\Icons", "OPEN=DEFAULT"*/
+
+exit
+
+
+getTempDir: PROCEDURE
+
+theDir=value('tmp',,"OS2ENVIRONMENT")
+theDir=TRANSLATE(theDir, "\", "/")
+rc=SysFileTree(theDir, "theDir", "D")
+IF theDir.0<> 0 THEN return theDir
+
+theDir=value('temp',,"OS2ENVIRONMENT")
+theDir=TRANSLATE(theDir, "\", "/")
+rc=SysFileTree(theDir, "theDir", "D")
+IF theDir.0<> 0 THEN return theDir
+
+
+theDir=value('tempdir',,"OS2ENVIRONMENT")
+theDir=TRANSLATE(theDir, "\", "/")
+rc=SysFileTree(theDir, "theDir", "D")
+IF theDir.0<> 0 THEN return theDir
+
+return ""
+

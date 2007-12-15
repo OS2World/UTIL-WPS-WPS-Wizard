@@ -1,0 +1,12 @@
+GetStrings:
+nlsStrings.1="Creating configuration folder..."
+nlsStrings.2='Can''t create the folder.'
+nlsStrings.3='Can''t create item.'
+nlsStrings.4="Menu for datafiles"
+nlsStrings.5="Copy ~filename"
+nlsStrings.6="~Zip this file"
+/* # of strings */
+nlsStrings.0=6
+
+return
+

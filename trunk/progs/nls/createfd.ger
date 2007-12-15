@@ -1,0 +1,23 @@
+GetStrings:
+nlsStrings.1="Erstelle Konfigurations Ordner..."
+nlsStrings.2='Kann Ordner nicht erstellen.'
+nlsStrings.3='MenÅpunkt kann nicht erstellt werden.'
+nlsStrings.4="KontextmenÅ fÅr Ordner"
+nlsStrings.5="Dateinamen ~kopieren"
+nlsStrings.6="Diesen Baum ~zippen"
+nlsStrings.7="~Laufwerke"
+nlsStrings.8="~Befehlszeilen"
+nlsStrings.9="OS/2-~Fenster"
+nlsStrings.10="OS/2-~Vollbild"
+nlsStrings.11="D~OS-Fenster"
+nlsStrings.12="DO~S-Vollbild"
+nlsStrings.13="Ordner Skripte"
+nlsStrings.14="~Verwendung von Skripten"
+nlsStrings.15="Beispiel ~1"
+nlsStrings.16="Beispiel ~2"
+
+/* # of strings */
+nlsStrings.0=16
+
+return
+

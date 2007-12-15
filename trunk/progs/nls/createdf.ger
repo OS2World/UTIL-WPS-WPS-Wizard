@@ -1,0 +1,12 @@
+GetStrings:
+nlsStrings.1="Erstelle Konfigurations Ordner..."
+nlsStrings.2='Kann Ordner nicht erstellen.'
+nlsStrings.3='Menpunkt kann nicht erstellt werden.'
+nlsStrings.4="Kontextmen fr Dateien"
+nlsStrings.5="Dateinamen ~kopieren"
+nlsStrings.6="Diese Datei ~zippen"
+/* # of strings */
+nlsStrings.0=6
+
+return
+
