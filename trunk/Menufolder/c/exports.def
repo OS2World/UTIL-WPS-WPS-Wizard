@@ -1,0 +1,30 @@
+PROTMODE
+CODE PRELOAD DISCARDABLE
+DATA SHARED PRELOAD DISCARDABLE
+EXPORTS  
+        M_CWWizzSettingsClassData
+        M_CWWizzSettingsCClassData
+        M_CWWizzSettingsNewClass
+        CWWizzSettingsClassData
+        CWWizzSettingsCClassData
+        CWWizzSettingsNewClass
+
+        M_CWMenuFolderClassData
+        M_CWMenuFolderCClassData
+        M_CWMenuFolderNewClass
+        CWMenuFolderClassData
+        CWMenuFolderCClassData
+        CWMenuFolderNewClass
+
+        M_CWLaunchAreaClassData
+        M_CWLaunchAreaCClassData
+        M_CWLaunchAreaNewClass
+        CWLaunchAreaClassData
+        CWLaunchAreaCClassData
+        CWLaunchAreaNewClass
+           
+        CWLAObjectClassData
+        CWLAObjectCClassData
+        CWLAObjectNewClass
+
+

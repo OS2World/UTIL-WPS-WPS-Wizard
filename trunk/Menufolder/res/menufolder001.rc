@@ -1,0 +1,85 @@
+#ifndef OS2_INCLUDED
+   #include <os2.h>
+#endif
+#include "newfile.h"
+#include "newfiledlg.h"
+
+ICON ID_ICONSETTINGS MWIZ.ico
+ICON ID_ICONMENUFOLD1 MWFOLD1.ico
+ICON ID_ICONMENUFOLD2 MWFOLD2.ico
+
+
+DLGTEMPLATE ID_CLASSCHOOSEPAGE LOADONCALL MOVEABLE DISCARDABLE
+BEGIN
+    DIALOG  "", ID_CLASSCHOOSEPAGE, 91, 22, 201, 199, NOT FS_DLGBORDER | 
+            WS_VISIBLE
+    BEGIN
+        LTEXT           " Classname: ", ID_CLASSNAME, 12, 31, 67, 8,      NOT WS_GROUP
+        LTEXT           " ", ID_CHOOSENCLASSNAME, 97, 31, 86, 8,    NOT WS_GROUP
+        CONTAINER       IDCN_CLASSDROP, 30, 59, 57, 44, CCS_SINGLESEL | 
+                        CCS_AUTOPOSITION
+        GROUPBOX        " Drop object here", IDGB_CLASSDROP, 12, 49, 92, 64, 
+                        NOT WS_GROUP
+        AUTOCHECKBOX    " Enable menu ", ID_ENABLECONTEXTMENU, 16, 124, 
+                        88, 10, WS_GROUP
+        PUSHBUTTON      "Cancel", ID_CONTEXTCANCEL, 11, 9, 56, 14
+        PUSHBUTTON      "Help", ID_CLASSCHOOSEHELP, 81, 9, 40, 14, BS_HELP
+    END
+END
+
+DLGTEMPLATE ID_FILEOPTIONPAGE LOADONCALL MOVEABLE DISCARDABLE
+BEGIN
+    DIALOG  "", ID_FILEOPTIONPAGE, 91, 22, 201, 199, NOT FS_DLGBORDER | 
+            WS_VISIBLE
+    BEGIN
+        LTEXT           "C. Wohlgemuth   (C) 1996-2006", IDST_AUTHOR, 15, 121, 156, 15, 
+                        NOT WS_GROUP
+                        PRESPARAMS PP_FONTNAMESIZE, "12.Helv"
+        AUTOCHECKBOX    "Enable REXX ~scripts  ", ID_ENABLEREXX, 15, 105, 
+                        130, 10, WS_GROUP
+        AUTOCHECKBOX    "Show ~object info", ID_ENABLEHINTS, 32, 92, 138, 
+                        10
+        AUTOCHECKBOX    "Folder ~info area", IDCB_FLDRINFOWINDOW, 31, 79, 138, 10
+        AUTOCHECKBOX    "Show ~filesize  ", FODLG_SHOWSIZE, 15, 65, 
+                        130, 10, WS_GROUP
+        AUTOCHECKBOX    "~Remove format menuitem", ID_NOFORMATMENUE, 15, 50, 
+                        142, 10
+        AUTOCHECKBOX    "Extended ~context menu ", ID_CONTEXTMENUE, 15, 36, 
+                        142, 10
+        PUSHBUTTON      "~Help", ID_OPTIONHELP, 59, 15, 40, 14, BS_HELP
+    END
+END
+
+DLGTEMPLATE IDDLG_REXXERROR LOADONCALL MOVEABLE DISCARDABLE
+BEGIN
+    DIALOG  "Rexx error", IDDLG_REXXERROR, 37, 94, 236, 84, , FCF_SYSMENU | 
+            FCF_TITLEBAR | FCF_NOBYTEALIGN
+    BEGIN
+        LISTBOX         IDLB_REXXERROR, 1, 15, 233, 68, LS_HORZSCROLL
+        PUSHBUTTON      "~Ok", DID_OK, 3, 0, 40, 14
+    END
+END
+
+
+MENU IDM_EMPTYMENU
+BEGIN
+
+END
+
+MENU IDM_DELETEMENU
+BEGIN
+    MENUITEM "~Remove button...",IDM_DELETEMENU
+END
+
+STRINGTABLE 
+BEGIN
+ID_CLASSPAGENAME "~Class selection"
+ID_GROUPBOXTEXT  "Chosen class:"
+ID_FOLDERTITLE     "Context menu for"
+ID_OPTIONPAGENAME   "~WPS-Wizard options"
+
+ID_CONFIGURATIONCLASSNAME "Menu-Wizard configuration"
+ID_MENUFOLDERCLASSNAME    "Menu-folder"
+END
+
+
