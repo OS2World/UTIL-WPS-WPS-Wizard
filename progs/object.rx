@@ -1,0 +1,43 @@
+/* rexx -  Default REXX script handling object callbacks of
+           WPS-Wizard. This script will be also called for
+           folder and data files if the scripts for these
+           do not handle the callbacks and return an appropriate
+           return code. */
+
+call RxFuncAdd 'SysLoadFuncs', 'RexxUtil', 'SysLoadFuncs'
+call SysLoadFuncs
+
+/*
+theString=ARG(1)||' !! '||ARG(2)||' !! '||ARG(3)||' !! '||ARG(4)
+call RxMessageBox ARG(3)*/
+
+SELECT
+WHEN ARG(1)="/OBJECTHINT" THEN DO
+	PARSE SOURCE . . theScript
+	thePath=FILESPEC("drive",theScript)||FILESPEC("path", theScript)||"objecthint.rx"
+	theHintCmd='call  "'||thePath||'" 'ARG(2)
+	interpret theHintCmd
+	EXIT result" "
+END
+WHEN ARG(1)="/FILTERPOPUP" THEN DO
+	PARSE VALUE ARG(4) WITH ulrc rest 
+	EXIT (ulrc)
+END
+WHEN ARG(1)="/MODIFYPOPUP" THEN DO
+	PARSE VALUE ARG(4) WITH ulrc rest 
+	EXIT (ulrc)
+END
+WHEN ARG(1)="/MENUITEMSELECTED" THEN DO
+	PARSE VALUE ARG(4) WITH hwndFrame ulMenuId 
+	/* Return 1 if you handle this menu item */
+	EXIT (0)
+END
+
+OTHERWISE
+	return ARG(3)
+END
+
+rc=12340
+EXIT 1234
+
+

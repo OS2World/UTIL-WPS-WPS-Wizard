@@ -1,0 +1,36 @@
+/* rexx -  Create fly over string for data file objects */
+
+call RxFuncAdd 'SysLoadFuncs', 'RexxUtil', 'SysLoadFuncs'
+call SysLoadFuncs
+
+
+theObject=ARG(1)
+
+/* Find object info in ini */
+PARSE SOURCE . . theScript
+
+iniPath=getIni()
+theId=WPSWizCallWPSFunc("wpQueryObjectID", theObject)
+if theId\="(null)" THEN DO
+	iniValue=SysIni(iniPath, theId, "hint")
+	if iniValue\="ERROR:" then DO
+		theString=iniValue
+		EXIT theString
+	END
+END
+
+/* No ini entry for this object */
+EXIT ""
+
+getIni:
+
+iniPath=FILESPEC("drive",theScript)||FILESPEC("path", theScript)
+iniPath=LEFT(iniPath, LENGTH(iniPath)-1)
+
+iniPath=FILESPEC("drive",iniPath)||FILESPEC("path", iniPath)
+iniPath=LEFT(iniPath, LENGTH(iniPath)-1)
+
+iniPath=FILESPEC("drive",iniPath)||FILESPEC("path", iniPath)
+
+return iniPath||"help\objhints.ini"
+

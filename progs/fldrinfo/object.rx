@@ -1,0 +1,117 @@
+/* rexx -  Default REXX script handling object callbacks of
+           WPS-Wizard. This script will be also called for
+           folder and data files if the scripts for these
+           do not handle the callbacks and return an appropriate
+           return code. */
+
+call RxFuncAdd 'SysLoadFuncs', 'RexxUtil', 'SysLoadFuncs'
+call SysLoadFuncs
+
+
+SELECT
+WHEN ARG(1)="/OBJECTINFO" THEN DO
+
+	/* rexx -  Create fly over string for objects (mainly abstracts) */
+
+	isShadow=0
+
+	/* First resolve shadow if any */
+	if WPSWizCallFunc("cwIsA", ARG(2), "WPShadow")="1" THEN DO
+		/* It's a shadow */
+		isShadow=1
+		theObject=WPSWizCallWPSFunc("wpQueryShadowedObject", ARG(2), 0)
+		if WPSWizCallFunc("cwIsObj", theObject)="0" THEN DO
+			/* Shadow is broken */
+			EXIT ""
+		END
+	END
+	ELSE
+		theObject=ARG(2)
+
+	/* Get title of object */
+	theString="<h1>"||TRANSLATE(WPSWizCallWPSFunc("wpQueryTitle", theObject), ' ',D2C(10) )||"</h1>"
+
+	/* Find object info in ini */
+	PARSE SOURCE . . theScript
+	iniPath=getIni()
+	theId=WPSWizCallWPSFunc("wpQueryObjectID", theObject)
+	if theId\="(null)" THEN DO
+		iniValue=SysIni(iniPath, theId, "hint")
+		if iniValue\="ERROR:" then DO
+			iniValue=TRANSLATE(iniValue, ' ',D2C(10) )
+			theString=theString||"<p>"||iniValue||"</p>"
+			EXIT theString||" "
+		END
+	END
+
+	/* No ini entry for this object */
+	if WPSWizCallFunc("cwIsA", theObject, "WPFileSystem")="1" & isShadow=1 THEN DO
+		theString=theString||"<p>links to:</p>"
+		thename=WPSWizCallFunc("cwQueryRealName", theObject, 1)
+/*		theString=theString||"<p><3 1001>"||FILESPEC("d", theName)||FILESPEC("path", thename)||"<4>"||FILESPEC("name", thename)*/
+		theString=theString||"<p>"||theName||"</p>"
+	END
+	EXIT theString||" "
+END
+WHEN ARG(1)="/INFOWINDOWEVENT" THEN DO
+    /* This callback is called with only 3 parameters!
+ 
+    ARG(1): The callback indentifier. In this case /INFOWINDOWEVENT
+    ARG(2): The object pointer
+    ARG(3): Deafult return code
+    ARG(4): A composite argument
+
+    */
+
+	PARSE VALUE ARG(4) WITH cmd id hwndInfo hwndFrame
+	/* cmd: the event. Currently only COMMAND 
+	   id:  id of the link which caused the event
+           hwnd: window handle of window holding the info text with the link
+           hwndFrame: frame handle of the folder
+	*/
+	SELECT
+	WHEN id=1001 then DO
+	isShadow=0
+
+	/* First resolve shadow if any */
+	if WPSWizCallFunc("cwIsA", ARG(2), "WPShadow")="1" THEN DO
+		/* It's a shadow */
+		isShadow=1
+		theObject=WPSWizCallWPSFunc("wpQueryShadowedObject", ARG(2), 0)
+		if WPSWizCallFunc("cwIsObj", theObject)="0" THEN DO
+			/* Shadow is broken */
+			EXIT ""
+		END
+	END
+	ELSE
+		theObject=ARG(2)
+
+	thename=WPSWizCallFunc("cwQueryRealName", theObject, 1)
+	theName=FILESPEC("d", theName)||FILESPEC("path", thename)
+	theName=LEFT(theName, LENGTH(theName)-1)
+	call sysSetObjectData theName, "OPEN=DEFAULT"
+	END
+	OTHERWISE
+		NOP
+	END
+
+END
+
+OTHERWISE
+	return ARG(3)
+END
+
+EXIT ARG(3)
+
+
+getIni:
+
+iniPath=FILESPEC("drive",theScript)||FILESPEC("path", theScript)
+iniPath=LEFT(iniPath, LENGTH(iniPath)-1)
+
+iniPath=FILESPEC("drive",iniPath)||FILESPEC("path", iniPath)
+iniPath=LEFT(iniPath, LENGTH(iniPath)-1)
+
+iniPath=FILESPEC("drive",iniPath)||FILESPEC("path", iniPath)
+
+return iniPath||"help\objhints.ini"

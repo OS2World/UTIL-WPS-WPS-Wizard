@@ -1,0 +1,70 @@
+/* rexx -  Default REXX script handling object callbacks of
+           WPS-Wizard. This script will be also called for
+           folder and data files if the scripts for these
+           do not handle the callbacks and return an appropriate
+           return code. */
+
+call RxFuncAdd 'SysLoadFuncs', 'RexxUtil', 'SysLoadFuncs'
+call SysLoadFuncs
+
+
+SELECT
+WHEN ARG(1)="/OBJECTHINT" THEN DO
+
+	/* rexx -  Create fly over string for objects (mainly abstracts) */
+	isShadow=0
+
+	/* First resolve shadow if any */
+	if WPSWizCallFunc("cwIsA", ARG(2), "WPShadow")="1" THEN DO
+		/* It's a shadow */
+		isShadow=1
+		theObject=WPSWizCallWPSFunc("wpQueryShadowedObject", ARG(2), 0)
+		if WPSWizCallFunc("cwIsObj", theObject)="0" THEN DO
+			/* Shadow is broken */
+			EXIT ""
+		END
+	END
+	ELSE
+		theObject=ARG(2)
+
+		/* Find object info in ini */
+		PARSE SOURCE . . theScript
+		iniPath=getIni()
+		theId=WPSWizCallWPSFunc("wpQueryObjectID", theObject)
+		if theId\="(null)" THEN DO
+			iniValue=SysIni(iniPath, theId, "hint")
+			if iniValue\="ERROR:" then DO
+				theString=iniValue
+				EXIT theString||" "
+			END
+		END
+
+		/* No ini entry for this object */
+		/* Get title of object */
+		theString=WPSWizCallWPSFunc("wpQueryTitle", theObject)
+
+		if WPSWizCallFunc("cwIsA", theObject, "WPFileSystem")="1" & isShadow=1 THEN DO
+			theString="'"||theString||"' links to:"'0a'x
+			theString=theString||WPSWizCallFunc("cwQueryRealName", theObject, 1)
+		END
+		return theString||" "
+	END
+
+OTHERWISE
+	return ARG(3)
+END
+
+EXIT ARG(3)
+
+
+getIni:
+
+iniPath=FILESPEC("drive",theScript)||FILESPEC("path", theScript)
+iniPath=LEFT(iniPath, LENGTH(iniPath)-1)
+
+iniPath=FILESPEC("drive",iniPath)||FILESPEC("path", iniPath)
+iniPath=LEFT(iniPath, LENGTH(iniPath)-1)
+
+iniPath=FILESPEC("drive",iniPath)||FILESPEC("path", iniPath)
+
+return iniPath||"help\objhints.ini"

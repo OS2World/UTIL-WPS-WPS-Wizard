@@ -1,0 +1,62 @@
+/* rexx - Copy an app in the theme ini file.
+ 
+   This script is part of the icon theme package. An add on
+   for WPS-Wizard.
+
+   (c) Chris Wohlgemuth 2007
+
+*/
+
+call RxFuncAdd 'SysLoadFuncs', 'RexxUtil', 'SysLoadFuncs'
+call SysLoadFuncs
+
+/* Find install dir */
+call SysQueryClassList "liste."
+do i = 1 to liste.0
+	PARSE VAR liste.i cls thePAth
+	IF cls="CWThemeObject" THEN LEAVE
+end
+
+thePath=FILESPEC("d", thePath)||FILESPEC("p", thePath)
+
+INIFILE=sysIni('USER' , 'IconTheme', 'IconFolder')
+INIFILE=STRIP(TRANSLATE(INIFILE, ' ', '00'x))
+if RIGHT(INIFILE, 1)<>'\' THEN INIFILE=INIFILE||"\"
+INIFILE=INIFILE||"wpswiz-theme.ini"
+
+
+PARSE VALUE arg(3) WITH source target 
+
+/*call LINEOUT "d:\wpswiz.log", "Copy "||ARG(2)||" "||ARG(1)||" "||ARG(3)*/
+
+rc=copyApp(source, target)
+
+/*call STREAM "d:\wpswiz.log", "c", "close"*/
+exit
+
+
+/***************************************/
+
+copyApp: PROCEDURE expose INIFILE
+
+
+IF ARG(1)=="DELETE:" THEN
+DO
+	rc=SysIni(INIFILE, ARG(2),"DELETE:")
+	return 0
+END
+
+rc=SysIni(INIFILE, ARG(1),"ALL:", "theSource")
+
+IF rc="ERROR:" THEN return 1
+
+/* First delete the target because it may hold some old stuff */
+rc=SysIni(INIFILE, ARG(2),"DELETE:")
+
+DO a= 1 to theSource.0
+   data=SysIni(INIFILE, ARG(1), theSource.a)
+   rc=SysIni(INIFILE, ARG(2), theSource.a, data)
+END
+
+return 0
+

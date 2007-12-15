@@ -1,0 +1,63 @@
+/* rexx -  Default REXX script handling data file callbacks of
+           WPS-Wizard */
+
+call RxFuncAdd 'SysLoadFuncs', 'RexxUtil', 'SysLoadFuncs'
+call SysLoadFuncs
+
+/*
+theString=ARG(1)||' !! '||ARG(2)||' !! '||ARG(3)||' !! '||ARG(4)
+call RxMessageBox ARG(3)*/
+
+
+
+SELECT
+WHEN ARG(1)="/OBJECTHINT" THEN DO
+	PARSE SOURCE . . theScript
+	thePath=FILESPEC("drive",theScript)||FILESPEC("path", theScript)||"dfhint.rx"
+	theHintCmd='call  "'||thePath||'" 'ARG(2)
+	interpret theHintCmd
+	if result\="" then EXIT result" "
+
+	theString=WPSWizCallFunc("cwQueryRealName", ARG(2), 1)
+	if LENGTH(theString)>3 THEN DO
+	if TRANSLATE(RIGHT(theString, 3))="TXT" THEN DO
+		/* Text file */
+		theFile=theString
+		theString=""
+		Do mya=1 to 6
+			theLine=LINEIN(theFile)
+			theString=theString||SUBWORD(theLine,1, 5)||"..."||'0a'x
+		END /* DO */
+		call stream theFile, "c", "close"
+		EXIT theString
+	END
+	END
+	theString=theString||":"'0a'x||'0a'x||WPSWizCallWPSFunc("wpQueryFileSize", ARG(2))||" bytes"
+	theString=theString||'0a'x||"Class: "||WPSWizCallWPSFunc("somGetClassName", ARG(2))
+	EXIT theString" "
+END
+WHEN ARG(1)="/FILTERPOPUP" THEN DO
+	PARSE VALUE ARG(4) WITH ulrc rest 
+	EXIT (ulrc)
+END
+WHEN ARG(1)="/MODIFYPOPUP" THEN DO
+	PARSE VALUE ARG(4) WITH ulrc rest 
+	EXIT (ulrc)
+END
+WHEN ARG(1)="/MENUITEMSELECTED" THEN DO
+	PARSE VALUE ARG(4) WITH hwndFrame ulMenuId 
+	/* Return 1 if you handle this menu item */
+	EXIT (0)
+END
+WHEN ARG(1)="/FILTERMENU" THEN DO
+	PARSE VALUE ARG(4) WITH hwndCnr fMulti ulMenuType ulView
+	EXIT (ARG(3))
+END
+OTHERWISE
+	return ARG(3)
+END
+
+rc=12340
+EXIT 1234
+
+

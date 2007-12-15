@@ -1,0 +1,88 @@
+/* rexx -  Default REXX script handling folder callbacks of
+           WPS-Wizard */
+
+call RxFuncAdd 'SysLoadFuncs', 'RexxUtil', 'SysLoadFuncs'
+call SysLoadFuncs
+
+theObject=ARG(2)
+
+SELECT
+WHEN ARG(1)="/FOLDERINFO" THEN DO
+	PARSE SOURCE . . theScript
+
+	theString="<h1>"||TRANSLATE(WPSWizCallFunc("cwQueryRealName", ARG(2), 0), ' ',D2C(10) )||"</h1>"
+
+	iniPath=getIni()
+	call getNLS
+	/* Find object info in ini */
+	theId=WPSWizCallWPSFunc("wpQueryObjectID", theObject)
+	if theId\="(null)" THEN DO
+		iniValue=SysIni(iniPath, theId, "hint")
+		if iniValue\="ERROR:" then DO
+			iniValue=TRANSLATE(iniValue, ' ',D2C(10) )
+			theString=theString||"<p>"||LEFT(iniValue,LENGTH(iniValue)-1)||"</p><hr>"
+		END
+	END
+	/* Add folder actions for this folder */
+
+	theString=theString||"<9 1><p><a 1>"||nls._drives||"</a></p>"
+	theString=theString||"<p><a 2>"||nls._mvolume||"</a></p><10><hr>"
+	DROP nls.
+/*  call rxmessagebox theString */
+
+	EXIT theString" "
+END
+WHEN ARG(1)="/INFOWINDOWEVENT" THEN DO
+    /* This callback is called with only 3 parameters!
+ 
+    ARG(1): The callback indentifier. In this case /INFOWINDOWEVENT
+    ARG(2): The object pointer
+    ARG(3): Deafult return code
+    ARG(4): A composite argument
+
+    */
+
+	PARSE VALUE ARG(4) WITH cmd id hwndInfo hwndFrame
+	/* cmd: the event. Currently only COMMAND 
+	   id:  id of the link which caused the event
+           hwnd: window handle of window holding the info text with the link
+           hwndFrame: frame handle of the folder
+	*/
+	SELECT
+	WHEN id=1 then call sysSetObjectData "<WP_DRIVES>", "OPEN=DEFAULT"
+
+	WHEN id=2 then call sysSetObjectData "<MMPM2_MMVOLUME>", "OPEN=DEFAULT"
+
+	OTHERWISE
+		NOP
+	END
+
+END
+OTHERWISE
+	return ARG(3)
+END
+
+EXIT ARG(3)
+
+
+getIni:
+
+iniPath=FILESPEC("drive",theScript)||FILESPEC("path", theScript)
+iniPath=LEFT(iniPath, LENGTH(iniPath)-1)
+
+iniPath=FILESPEC("drive",iniPath)||FILESPEC("path", iniPath)
+iniPath=LEFT(iniPath, LENGTH(iniPath)-1)
+
+iniPath=FILESPEC("drive",iniPath)||FILESPEC("path", iniPath)
+
+return iniPath||"help\objhints.ini"
+
+
+getNLS:
+
+nls._drives=SysIni(iniPath, "nls", "drives")
+nls._sysconf=SysIni(iniPath, "nls", "sysconf")
+nls._wpswiz=SysIni(iniPath, "nls", "wpswiz")
+nls._mvolume=SysIni(iniPath, "nls", "mvolume")
+
+return

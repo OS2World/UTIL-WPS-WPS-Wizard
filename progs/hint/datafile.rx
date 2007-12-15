@@ -1,0 +1,69 @@
+/* rexx -  Default REXX script handling data file callbacks of
+           WPS-Wizard */
+
+call RxFuncAdd 'SysLoadFuncs', 'RexxUtil', 'SysLoadFuncs'
+call SysLoadFuncs
+
+theObject=ARG(2)
+
+SELECT
+WHEN ARG(1)="/OBJECTHINT" THEN DO
+	PARSE SOURCE . . theScript
+
+	iniPath=getIni()
+	call getNLS
+	/* Find object info in ini */
+	theId=WPSWizCallWPSFunc("wpQueryObjectID", theObject)
+	if theId\="(null)" THEN DO
+		iniValue=SysIni(iniPath, theId, "hint")
+		if iniValue\="ERROR:" then DO
+			theString=iniValue
+			EXIT theString||" "
+		END
+	END
+
+	/* No ini entry for this object */
+
+	theString=WPSWizCallFunc("cwQueryRealName", ARG(2), 1)
+	if LENGTH(theString)>3 THEN DO
+	if TRANSLATE(RIGHT(theString, 3))="TXT" THEN DO
+		/* Text file */
+		theFile=theString
+		theString=""
+		Do mya=1 to 6
+			theLine=LINEIN(theFile)
+			theString=theString||SUBWORD(theLine,1, 5)||"..."||'0a'x
+		END /* DO */
+		call stream theFile, "c", "close"
+		EXIT theString
+	END
+	END
+	theString=theString||":"'0a'x||'0a'x||WPSWizCallWPSFunc("wpQueryFileSize", ARG(2))||" bytes"
+	theString=theString||'0a'x||nls._class||": "||WPSWizCallWPSFunc("somGetClassName", ARG(2))
+	EXIT theString" "
+END
+OTHERWISE
+	return ARG(3)
+END
+
+EXIT ARG(3)
+
+
+getIni:
+
+iniPath=FILESPEC("drive",theScript)||FILESPEC("path", theScript)
+iniPath=LEFT(iniPath, LENGTH(iniPath)-1)
+
+iniPath=FILESPEC("drive",iniPath)||FILESPEC("path", iniPath)
+iniPath=LEFT(iniPath, LENGTH(iniPath)-1)
+
+iniPath=FILESPEC("drive",iniPath)||FILESPEC("path", iniPath)
+
+return iniPath||"help\objhints.ini"
+
+getNLS:
+
+nls._class=SysIni(iniPath, "nls", "class")
+
+return
+

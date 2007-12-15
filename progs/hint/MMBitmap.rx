@@ -1,0 +1,63 @@
+/* rexx - Default script for MMBitmap class. Install the CW-Multimedia classes
+           to use the features of this script. */
+
+call RxFuncAdd 'SysLoadFuncs', 'RexxUtil', 'SysLoadFuncs'
+call SysLoadFuncs
+
+
+SELECT
+WHEN ARG(1)="/OBJECTHINT" THEN DO
+	PARSE SOURCE . . theScript
+
+	iniPath=getIni()
+	call getNLS
+
+	thePath=FILESPEC("drive",theScript)||FILESPEC("path", theScript)||"dfhint.rx"
+	theHintCmd='call  "'||thePath||'" 'ARG(2)
+	interpret theHintCmd
+	if result\="" then EXIT result" "
+
+	theString=WPSWizCallFunc("cwQueryRealName", ARG(2), 1)
+	theString=theString||":"'0a'x||'0a'x||WPSWizCallWPSFunc("wpQueryFileSize", ARG(2))||" bytes"
+	theString=theString||'0a'x||"Class: "||WPSWizCallWPSFunc("somGetClassName", ARG(2))
+	info=MMCallFunc("cwmmQueryImageInfo", ARG(2), 1)
+	if info\="ERROR:" THEN
+		theString=theString||'0a'x||'0a'x||nls._width||": "||info
+	info=MMCallFunc("cwmmQueryImageInfo", ARG(2), 2)
+	if info\="ERROR:" THEN
+		theString=theString||'0a'x||nls._height||": "||info
+	info=MMCallFunc("cwmmQueryImageInfo", ARG(2), 3)
+	if info\="ERROR:" THEN
+		theString=theString||'0a'x||nls._depth||": "||info
+	info=MMCallFunc("cwmmQueryImageInfo", ARG(2), 4)
+	if info\="ERROR:" THEN
+		theString=theString||'0a'x||info
+
+	EXIT theString" "
+END
+OTHERWISE
+	return ARG(3)
+END
+
+EXIT ARG(3)
+
+getIni:
+
+iniPath=FILESPEC("drive",theScript)||FILESPEC("path", theScript)
+iniPath=LEFT(iniPath, LENGTH(iniPath)-1)
+
+iniPath=FILESPEC("drive",iniPath)||FILESPEC("path", iniPath)
+iniPath=LEFT(iniPath, LENGTH(iniPath)-1)
+
+iniPath=FILESPEC("drive",iniPath)||FILESPEC("path", iniPath)
+
+return iniPath||"help\objhints.ini"
+
+getNLS:
+
+nls._height=SysIni(iniPath, "nls", "height")
+nls._width=SysIni(iniPath, "nls", "width")
+nls._depth=SysIni(iniPath, "nls", "depth")
+
+return
+

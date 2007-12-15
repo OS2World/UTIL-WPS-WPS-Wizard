@@ -1,0 +1,86 @@
+/* rexx -  Default REXX script handling folder callbacks of
+           WPS-Wizard */
+
+call RxFuncAdd 'SysLoadFuncs', 'RexxUtil', 'SysLoadFuncs'
+call SysLoadFuncs
+
+theObject=ARG(2)
+
+SELECT
+WHEN ARG(1)="/OBJECTHINT" THEN DO
+	PARSE SOURCE . . theScript
+
+	theString="<1 0>"||WPSWizCallFunc("cwQueryRealName", ARG(2), 0)||"<2><0>"
+
+	call getNLS
+	/* Find object info in ini */
+	iniPath=getIni()
+	theId=WPSWizCallWPSFunc("wpQueryObjectID", theObject)
+	if theId\="(null)" THEN DO
+		iniValue=SysIni(iniPath, theId, "hint")
+		if iniValue\="ERROR:" then DO
+			iniValue=TRANSLATE(iniValue, ' ',D2C(10) )
+			theString=theString||LEFT(iniValue,LENGTH(iniValue)-1)||"<7><6>"
+		END
+	END
+	/* Add folder actions for this folder */
+
+	theString=theString||"<9 1> <3 1>"||nls._drives||"<4><6>"
+	theString=theString||"<3 2>"||nls._sysconf||"<4><6>"
+	theString=theString||"<3 3>"||nls._wpswiz||"<4><10>"
+	DROP nls.
+	EXIT theString" "
+END
+WHEN ARG(1)="/INFOWINDOWEVENT" THEN DO
+    /* This callback is called with only 3 parameters!
+ 
+    ARG(1): The callback indentifier. In this case /INFOWINDOWEVENT
+    ARG(2): The object pointer
+    ARG(3): Deafult return code
+    ARG(4): A composite argument
+
+    */
+
+	PARSE VALUE ARG(4) WITH cmd id hwndInfo hwndFrame
+	/* cmd: the event. Currently only COMMAND 
+	   id:  id of the link which caused the event
+           hwnd: window handle of window holding the info text with the link
+           hwndFrame: frame handle of the folder
+	*/
+	SELECT
+	WHEN id=1 then call sysSetObjectData "<WP_DRIVES>", "OPEN=DEFAULT"
+
+	WHEN id=2 then call sysSetObjectData "<WP_CONFIG>", "OPEN=DEFAULT"
+
+	WHEN id=3 then call sysSetObjectData "<WPSWIZ_FOLDER>", "OPEN=DEFAULT"
+	OTHERWISE
+		NOP
+	END
+
+END
+OTHERWISE
+	return ARG(3)
+END
+
+EXIT ARG(3)
+
+
+getIni:
+
+iniPath=FILESPEC("drive",theScript)||FILESPEC("path", theScript)
+iniPath=LEFT(iniPath, LENGTH(iniPath)-1)
+
+iniPath=FILESPEC("drive",iniPath)||FILESPEC("path", iniPath)
+iniPath=LEFT(iniPath, LENGTH(iniPath)-1)
+
+iniPath=FILESPEC("drive",iniPath)||FILESPEC("path", iniPath)
+
+return iniPath||"help\objhints.ini"
+
+
+getNLS:
+
+nls._drives="Open drives folder..."
+nls._sysconf="System configuration..."
+nls._wpswiz="WPS wizard configuration..."
+return

@@ -1,0 +1,44 @@
+/* rexx -  Default REXX script handling folder callbacks of
+           WPS-Wizard */
+
+call RxFuncAdd 'SysLoadFuncs', 'RexxUtil', 'SysLoadFuncs'
+call SysLoadFuncs
+
+/* Uncomment if you don't want to have a tool bar */
+/* WANTTOOLBAR=NO */
+
+/*theString=ARG(1)||' !! '||ARG(2)||' !! '||ARG(3)||' !! '||ARG(4)
+*/
+
+WC_BUTTON=ffff0003
+WC_STATIC=ffff0005
+WC_ENTRYFIELD=ffff0006
+WC_MLE=ffff000A
+
+NUMBUTTONS=9
+idEntry=NUMBUTTONS+1
+
+FOLDER_MIN_SIZE_Y=200
+
+NUMERIC DIGITS 15 /* We need this for caculating with hex numbers */
+
+SELECT
+
+WHEN ARG(1)="/FOLDEROPENED" THEN DO
+	EXIT(0)
+END
+WHEN ARG(1)="/FILTERPOPUP" THEN DO
+	/* Intercept this to remove some items from the popup menu */
+	EXIT (ARG(3))
+END
+WHEN ARG(1)="/MODIFYPOPUP" THEN DO
+	/* Insert new items to the popup menu */
+	PARSE VALUE ARG(4) WITH hwndMenu rest
+
+	EXIT (ARG(3)) /* Return parent result */
+END
+OTHERWISE
+	return ARG(3)
+END
+
+

@@ -1,0 +1,71 @@
+/* rexx -  Default script for MMMP3. Install the CW-Multimedia classes
+           to use the features of this script. */
+
+call RxFuncAdd 'SysLoadFuncs', 'RexxUtil', 'SysLoadFuncs'
+call SysLoadFuncs
+
+SELECT
+WHEN ARG(1)="/OBJECTHINT" THEN DO
+	PARSE SOURCE . . theScript
+
+	iniPath=getIni()
+	call getNLS
+
+	theString=WPSWizCallFunc("cwQueryRealName", ARG(2), 0)
+
+	theString=theString||":"'0a'x
+
+	track=MMClsCallFunc("cwmmQueryTrackInfo", ARG(2), 1)
+	if track\="ERROR:" THEN
+		theString=theString||'0a'x||track
+
+	track=MMClsCallFunc("cwmmQueryTrackInfo", ARG(2), 2)
+
+	if track\="ERROR:" THEN
+		theString=theString||'0a'x||"     "||nls._by||" "||track
+
+	sec=MMClsCallFunc("cwmmQueryTrackInfo", ARG(2), 7)
+
+	br=MMClsCallFunc("cwmmQueryTrackInfo", ARG(2),  11)
+	
+	if br\="ERROR:" THEN
+		theString=theString||'0a'x||'0a'x||br/1000||" kBit"
+
+	if sec\="ERROR:" THEN
+		theString=theString||'0a'x||sec % 60||":"RIGHT( "00"||sec//60,2)||" min"
+	channel=MMClsCallFunc("cwmmQueryTrackInfo", ARG(2), 10)
+	IF channel=1 THEN
+		theString=theString||'0a'x||"1 "||nls._channel
+	ELSE
+		theString=theString||'0a'x||channel||" "||nls._channels
+
+	EXIT theString" "
+END
+
+
+OTHERWISE
+	return ARG(3)
+END
+
+EXIT ARG(3)
+
+getIni:
+
+iniPath=FILESPEC("drive",theScript)||FILESPEC("path", theScript)
+iniPath=LEFT(iniPath, LENGTH(iniPath)-1)
+
+iniPath=FILESPEC("drive",iniPath)||FILESPEC("path", iniPath)
+iniPath=LEFT(iniPath, LENGTH(iniPath)-1)
+
+iniPath=FILESPEC("drive",iniPath)||FILESPEC("path", iniPath)
+
+return iniPath||"help\objhints.ini"
+
+getNLS:
+
+nls._by=SysIni(iniPath, "nls", "by")
+nls._channel=SysIni(iniPath, "nls", "channel")
+nls._channels=SysIni(iniPath, "nls", "channels")
+
+return
+

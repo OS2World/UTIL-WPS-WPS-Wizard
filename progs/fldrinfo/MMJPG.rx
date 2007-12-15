@@ -1,0 +1,110 @@
+/* rexx -  Default script for MMJPG. Install the CW-Multimedia classes
+           to use the features of this script. */
+
+call RxFuncAdd 'SysLoadFuncs', 'RexxUtil', 'SysLoadFuncs'
+call SysLoadFuncs
+
+SELECT
+WHEN ARG(1)="/OBJECTINFO" THEN DO
+	PARSE SOURCE . . theScript
+
+	iniPath=getIni()
+	call getNLS
+
+	thePath=FILESPEC("drive",theScript)||FILESPEC("path", theScript)||"dfhint.rx"
+	theHintCmd='call  "'||thePath||'" 'ARG(2)
+	interpret theHintCmd
+	if result\="" then EXIT result" "
+
+	theString="<h1>"||WPSWizCallFunc("cwQueryRealName", ARG(2), 0)||"</h1>"
+	theString=theString||"<p>"||WPSWizCallWPSFunc("wpQueryFileSize", ARG(2))||" bytes</p><p>"
+/*	theString=theString||"Class: "||WPSWizCallWPSFunc("somGetClassName", ARG(2))||"<5>"*/
+	info=MMCallFunc("cwmmQueryImageInfo", ARG(2), 1)
+	if info\="ERROR:" THEN
+		theString=theString||nls._width||": "||info||"<br>"
+	info=MMCallFunc("cwmmQueryImageInfo", ARG(2), 2)
+	if info\="ERROR:" THEN
+		theString=theString||nls._height||": "||info||"<br>"
+	info=MMCallFunc("cwmmQueryImageInfo", ARG(2), 3)
+	if info\="ERROR:" THEN
+		theString=theString||nls._depth||": "||info||"<br>"
+	info=MMCallFunc("cwmmQueryImageInfo", ARG(2), 4)
+	if info\="ERROR:" THEN
+		theString=theString||info
+
+	theString=theString||"</p><p><9 1><a 1001>"||nls._convert||"</a><10></p>"
+
+	EXIT theString" "
+END
+WHEN ARG(1)="/INFOWINDOWEVENT" THEN DO
+    /* This callback is called with only 3 parameters!
+ 
+    ARG(1): The callback indentifier. In this case /INFOWINDOWEVENT
+    ARG(2): The object pointer
+    ARG(3): Deafult return code
+    ARG(4): A composite argument
+
+    */
+	PARSE SOURCE . . theScript
+
+	iniPath=getIni()
+	call getNLS
+
+	PARSE VALUE ARG(4) WITH cmd id hwndInfo hwndFrame object
+	/* cmd: the event. Currently only COMMAND 
+	   id:  id of the link which caused the event
+           hwnd: window handle of window holding the info text with the link
+           hwndFrame: frame handle of the folder
+	   object:    Currently selected object
+	*/
+	SELECT
+	WHEN id=1001 then DO
+		ADDRESS CMD 'start "'nls._convert'" /PGM "'getMMClsDir()||'bin\imgconv.exe" "'||WPSWizCallFunc("cwQueryRealName", ARG(2), 1)||'"'
+	END
+	OTHERWISE
+		NOP
+	END
+END
+
+OTHERWISE
+	return ARG(3)
+END
+EXIT ARG(3)
+
+getMMClsDir:
+	found=0
+	ret=SysQueryClassList('classes.')
+	DO cls=1 to classes.0
+		theclass=WORD(classes.cls, 1)
+		clsPath=SUBWORD(classes.cls, 2)
+		IF TRANSLATE(theClass)=TRANSLATE("MMMP3") THEN DO
+			found=1	
+			LEAVE
+		END
+	END
+
+clsPath=FILESPEC("drive", clsPath)||FILESPEC("path", clsPath)
+
+return clsPath
+
+getIni:
+
+iniPath=FILESPEC("drive",theScript)||FILESPEC("path", theScript)
+iniPath=LEFT(iniPath, LENGTH(iniPath)-1)
+
+iniPath=FILESPEC("drive",iniPath)||FILESPEC("path", iniPath)
+iniPath=LEFT(iniPath, LENGTH(iniPath)-1)
+
+iniPath=FILESPEC("drive",iniPath)||FILESPEC("path", iniPath)
+
+return iniPath||"help\objhints.ini"
+
+getNLS:
+
+nls._height=SysIni(iniPath, "nls", "height")
+nls._width=SysIni(iniPath, "nls", "width")
+nls._depth=SysIni(iniPath, "nls", "depth")
+nls._convert=SysIni(iniPath, "nls", "convert")
+
+return
+

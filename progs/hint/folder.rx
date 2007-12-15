@@ -1,0 +1,65 @@
+/* rexx -  Default REXX script handling folder callbacks of
+           WPS-Wizard */
+
+call RxFuncAdd 'SysLoadFuncs', 'RexxUtil', 'SysLoadFuncs'
+call SysLoadFuncs
+
+theObject=ARG(2)
+
+SELECT
+WHEN ARG(1)="/OBJECTHINT" THEN DO
+	PARSE SOURCE . . theScript
+
+	iniPath=getIni()
+	call getNLS
+
+	/* Find object info in ini */
+	theId=WPSWizCallWPSFunc("wpQueryObjectID", theObject)
+	if theId\="(null)" THEN DO
+		iniValue=SysIni(iniPath, theId, "hint")
+		if iniValue\="ERROR:" then DO
+			theString=iniValue
+			EXIT theString||" "
+		END
+	END
+
+	/* No ini entry for this object */
+
+	theString=WPSWizCallFunc("cwQueryRealName", ARG(2), 1)
+	theDir=theString
+	theString=theString||":"
+	ret=SysFileTree(theDir"\*", "files.", "F")
+	if files.0\=0 THEN
+		theString=theString||'0a'x||files.0||" "||nls._files
+	ret=SysFileTree(theDir"\*", "dirs.", "D")
+	if dirs.0\=0 THEN
+		theString=theString||'0a'x||dirs.0||" "||nls._dirs
+	EXIT theString" "
+END
+
+OTHERWISE
+	return ARG(3)
+END
+
+EXIT ARG(3)
+
+
+getIni:
+
+iniPath=FILESPEC("drive",theScript)||FILESPEC("path", theScript)
+iniPath=LEFT(iniPath, LENGTH(iniPath)-1)
+
+iniPath=FILESPEC("drive",iniPath)||FILESPEC("path", iniPath)
+iniPath=LEFT(iniPath, LENGTH(iniPath)-1)
+
+iniPath=FILESPEC("drive",iniPath)||FILESPEC("path", iniPath)
+
+return iniPath||"help\objhints.ini"
+
+getNLS:
+
+nls._files=SysIni(iniPath, "nls", "files")
+nls._dirs=SysIni(iniPath, "nls", "dirs")
+
+return
+
