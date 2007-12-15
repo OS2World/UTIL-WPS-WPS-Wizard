@@ -1,0 +1,179 @@
+History
+-------
+
+V0.6.0 (09.12.2007)
+
+-Updates to readme file
+
+
+V0.6.0b4 (17.11.07)
+
+-Removed error beep when painting of shadows failed
+-Reworked install script. On some systems class registration failed
+
+
+V0.6.0b3 (14.10.2007)
+
+-Icon sizing menu only for icon view
+-Fixed crash first seen with M3U-Folders due to accidently freeing of shared images
+-Changed inheritance tree of CWShadow. For some strange reason wpUnInitData() was called twice
+
+
+V0.6.0b2 (05.10.2007)
+
+-Browsing, editing and saving of icons sometimes didn't work. Trailing '0' problem
+-Aspect ratio for some images was wrong in preview
+-New stack handling when calling wpRestoreState(), wpSetFldrBackground() for WPFolder and handling
+ icon drops
+-Fallback to WPFolder image if no specialized class image for a folder class is given.
+-Added preview for Lucide thumbnails
+-Fixed error in tutorial
+
+
+V0.6.0b1 (23.09.2007)
+
+Note: V0.5.3 GA was never released.
+
+-Migrated from icc to gcc (exept menu folder)
+-Added fix for wpObjectReady() WPS bug (WPFolder never called wpObjectReady() of the parent)
+-Using bigger stack when opening folders or showing background pages. This
+ solves a general WPS problem with stack sizes and thus is a stability improvement. 
+ It is not related to the theme feature or WPS wizard but a workaround for a system
+ problem.
+-Integrated icon theme code into the WPS Wizard classes.
+-Added preview of images to folder information area
+
+
+Iconthemes:
+
+-Images set using a setup string weren't saved.
+-Appending to a NOMPtrArray was broken
+-Not all strings in the CLASS-NAME.INI were terminated by zero.
+-More images defined in CLASS-NAME.INI
+-Data files with attached own images had the normal icon during drag and drop
+-Basic PNG iconeditor
+-Removed obsolete methods in CWThemeMgr
+-Internal cleanups
+-When dropping an object without custom icon use the class icon instead
+-Using bigger stack when opening folders or showing background pages. This
+ solves a general WPS problem with stack sizes and thus is a stability improvement. 
+ It is not related to the theme classes or WPS wizard but a workaround for a system
+ problem.
+-New CairoGadget class.
+-Assigned icon were lost on reboot when icon path in INI did not end with a '\'.
+-Don't try to assign an animated icon to non-folders and save it in the INI.
+-And much more...
+
+
+V0.5.3b1
+
+-Added WizStopTimer() Rexx function for gadgets.
+-Added hidden key to ini for color of drive fill bars.
+-Let theme package paint toolbar icons if V1.1 or later is installed.
+-New Cairo gadget if theme package V1.1 or later is installed
+-Some minor bugfixes
+
+Iconthemes:
+
+-Added XFolder to the list of supported classes in the ini file
+
+
+V0.5.2 (06.Apr.2007):
+
+-New CWObject method 'wizQueryRexxScript()'.
+-Fixed a possible memory leak with folder info scripts.
+-Sometimes carriage returns in object names truncated flyover help for launchpad buttons.
+-Iconsize may be increased. Esp. useful for folders with image files.
+-Check for broken SET HOME= statement in config.sys
+-Fixed crash when 'cwCreateLaunchArea' was called with a WPFolder instead of CWLaunchArea object.
+-Improved REXX error reporting.
+-Image data is deleted when scrolled out of sight in a container. This prevents memory exhausting when a
+ folder contains several hundred or thousand image files. CWMM-classes V2.9.0 or above must be installed.
+-You may TAB from the folder toolbar to the container. Tabbing to the toolbar or between toolbars isn't yet implemented.
+-ONTIMER in gadgets was called without the timer ID
+-Changed installation script to always create new toolbar folders ('replace' instead of 'update')
+-Added check for timer ID value in winStartTimer() and winStopTimer()
+-Folder information area is using the Innotek font engine for text drawing.
+-Added support for icon theming in the WPS. You may use PNG icons now. You need a separate icon addon.
+
+
+V0.5.1 (12.03.2004):
+
+-Added IMAGE_GADGET
+-New context menu for folder action buttons
+-New menu function menuEnableItem()
+-More german translations of hints
+-Size of infowindow wasn't always saved
+-Bar showing the free drive space for the Icons in drives folder 
+-The image contained in an image file is drawn as the icon (if the cw-multimedia classes are installed). 
+-Format menu is properly removed for USB floppy drives now.
+-Some more icons by Klaus Staedtler
+-Gadget variable <system.path.wpswizardhints> pointed to INI file not hint database.
+-The INI file WPSWIZZ.INI is now created in the users home directory if defined.
+
+
+V0.5.0 (02.01.2004):
+
+-Added Gadgets (small scripts running in the background and drawing their
+ output on the desktop).
+-Added a script tutorial section to the documentation.
+-Minor fixes to the install and uninstall scripts.
+
+
+V0.4.1 (21.Nov.2003):
+
+-Info area text formatting rewritten for better tag and font handling. It may be necessary to adjust your info scripts.
+-Better font handling for the info area
+-When REXX/info area are disabled the corresponding menuitems are removed.
+-Fixed a couple of minor memory leaks
+-New generic WPS class implementing a general purpose launch area.
+-Launch area for toolbar. Drop any object there and use it like the LaunchPad.
+-Toolbar buttons may be configured using drag and drop.
+-Better error reporting for Rexx scripts.
+-New function 'winShowWindow()'
+-Fixed broken transparency with SDD and SNAP
+
+
+V0.4.0 (21.Jun.2003):
+
+-Corrected some typos in the manual
+-Fixed some memory leaks
+-Better script handling. Different kind of scripts have their own subdir.
+-New callback for wpModifyMenu
+-New function winQueryFolderObjects()
+-Info area in folders.
+-Toolbar may be disabled independently for any folder.
+-Some code cleanups
+
+
+V0.3.0 (10.Jan.2003):
+
+-Saving of scrollbar position in detailsview not always worked.
+-Files copied from CD are not read only.
+-Submenus in user skripts menu are possible.
+-Added support for wpSetType(), wpQueryFldrSortClass(), wpQueryFldrDetailsClass(),
+ wpSetFldrDetailsClass(), wpSetFldrSortClass()
+-Added WPS call back interface for selected methods for use with REXX scripts.
+-Added menu functions and drag functions to REXX interface.
+-Added object hints (fly over help).
+
+
+V0.2.0 (8.Mar.2002):
+
+-Saving of splitbar position for folder details view.
+-Saving of scrollbar position for details view.
+-REXX interface to the WPS added.
+-Templates checkbox was lost.
+-Fixed some minor memory leaks.
+
+
+V0.1.2 (13.May.2001):
+
+-Parameters of program objects were sometimes messed up.
+-The tilde wasn't properly removed from titles.
+
+
+V0.1.0 (05.May.2001):
+
+-First public version.
+

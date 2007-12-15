@@ -1,0 +1,37 @@
+                          Upload Information Template for Hobbes.nmsu.edu
+                          ===============================================
+
+        Archive Filename:   wpswizard-0_5_2-ger.zip
+       Short Description:    WPS-Wizard V0.5.2. free WPS classes to add different custom menus to any filesystem object, info area and toolbars to folders. REXX interface to the WPS and much more.
+                             German version.
+        Long Description:    WPS-Wizard adds configurable context menus to every
+filesystem object of your system. You may have different
+menus for every class in addition to a set of standard
+menu items. Configuration is done using drag and drop.
+Freely programmable object fly over help, folder toolbars and folder info area. Change the toolbar
+using your mouse and drag and drop. Gadgets for displaying information on the
+desktop graphically or as text. These gadgets are small and easy to create REXX scripts. Image files are shown as their icon.
+A REXX interface is provided which gives access to the WPS
+from user scripts. Modify functions of WPS classes using
+REXX (similar to subclassing).  Use fancy PNG icons with the WPS using a separate icon package.
+Help and tutorial included.
+German version, freeware.
+
+      Proposed directory
+           for placement:  pub/os2/util/wps   
+
+               Your name:   Chris Wohlgemuth
+           Email address:   see tutorial
+    Program contact name: (same)
+   Program contact email: (same)
+             Program URL:    http://www.os2world.com/cdwriting/
+
+      Would you like the
+   contact email address
+    included in listings? yes
+
+Operating System/Version: Warp 4 and above or eCS
+ Additional requirements:   EMX runtime libraries 0.9d fix 4, Cairo runtime libs, Innotek font engine. Libc06.dll (for Cairo).
+
+                Replaces: (none)
+

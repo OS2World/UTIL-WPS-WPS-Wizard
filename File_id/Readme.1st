@@ -1,0 +1,185 @@
+WPS-Wizard 09.12.2007
+---------------------
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Note: If you don't like this package don't use it. You get it for
+      free in the end.
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+WPS-Wizard V0.6.0 adds an icon engine to the WPS so colorful PNG images
+can be used as icons. A preview for image files and thumbnails created
+by the Lucide application is added to the info area.
+Some of the features are:
+
+- Configurable menu items
+- Different menu items for different classes
+- Programmable object fly over help
+- Folder toolbars (freely programmable). Change it using drag and drop.
+- Folder information area. Changeable using Rexx.
+- Gadgets for displaying information on the
+  desktop as bars or text. These are small and easy to create
+  REXX scripts.
+- Contents of image files is displayed as the icon.
+- A REXX interface is provided which gives access to the WPS
+  from user scripts. Modify functions of WPS classes using
+  REXX (similar to subclassing).
+- A preview for image files and Lucide thumbnails is added
+  to the info area of folders.
+- Change icon size up to 200x200
+- Icon engine for using PNG images as icons
+- Icon engine allows image composition using simple statements
+- Separate PNG icon package are available
+- Help and tutorial included
+- Workarounds for some WPS bugs
+
+
+Installation
+------------
+
+Be sure to have installed Cairo 1.46, libc061
+and the Innotek font engine. Otherwise installation will fail.
+
+Font engine:
+
+http://www.innotek.de/index.php?option=com_content&task=view&id=28&Itemid=44
+(http://www.innotek.de/)
+
+Cairo:
+
+ftp://ftp.netlabs.org/pub/Cairo/
+
+
+WPS-Wizard must be installed on a partition supporting
+long filenames.
+
+Before installation uninstall any prior release and restart
+the WPS.
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Be sure not to have any folder open while uninstalling.
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Because the WPS sometimes keeps IDs around even if the object
+belonging to the ID is already destroyed it's advised to remove
+the old installation folder completely (make sure not to use the
+trashcan) and run checkini afterwards.
+
+For installation move this directory to the desired location
+and run install.cmd. 
+The directory can't be moved afterwards because the DLLs
+are locked by the WPS.
+
+
+
+Problems
+--------
+
+- Registering classes may need up to a minute sometimes. So if the script seems to
+  be stuck be patient.
+
+- Sometimes after upgrading WPS-wizard toolbar items are broken. Just rerun the
+  installation script and delete items which are duplicates. It's save to
+  run the install script numerous times.
+
+- When upgrading an installation it may happen that the private toolbar folders
+  can't be found. A window pops up with an error message. If this happens delete
+  the tree which held your previous installation, run checkini (to remove ID info from the
+  INI) and reinstall WPS-wizard.
+
+- Lucide previews are not shown if the IO procs from the eSchemes package are
+  installed. The problem is the included GIF IO proc which seems not to be system conformant.
+
+- There is no preview for bitmap files.
+
+- Use 32bit with your graphics driver if drag and drop icons are "ghost" icons
+
+- The icon editor is disabled for normal OS/2 icons if PNG icons are used
+
+
+Trap information is written to 'wpswiz.log' on your bootdrive.
+
+
+Bug reports
+-----------
+
+There is a bugtracker at http://svn.netlabs.org/wps-wizard
+
+Use guest/netlabs to login.
+
+-Ask on irc for a possible solution (prefered)
+
+-Before issuing a dozen tickets about install problems make sure your INI files are not
+ broken.
+
+-Try disabling other WPS addons before blaming WPS-Wizard for bugs. It's a matter
+ of fact that WPS-Wizard often causes hidden bugs in other packages to appear (example:
+ the GIF IO procedure problem with eSchemes). WPS-Wizard uses deeply hidden APIs of SOM
+ (note: APIs not hacks) other addons are not aware of or use in a wrong way.
+ 
+-Tickets without attached information about what's happening and how to reproduce problems
+ will be ignored.
+
+-I do this in my spare time not for money. If you piss at me don't expect a polite answer
+ (or an answer at all...)
+
+
+Icon themes
+-----------
+
+Older icon themes designed for V0.5.3 don't work with this release of WPS-Wizard.
+
+The control file has to be renamed from
+
+   CLASS-IMAGE.INI
+
+   to
+
+   wpswiz-theme.ini
+
+For your convinience there is a script ../bin/theme/set-icon-theme.cmd to do all
+the work. Copy it to the location where CLASS-IMAGE.INI is to be found and run
+it. It will rename the INI file, set the particular theme as the new one and
+restarts the WPS after confirmation.
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Note: don't run the install script included with the old icon themes!
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+Home of the package
+--------------------
+http://www.os2world.com/cdwriting
+
+(As soon as I update the pages...)
+
+http://svn.netlabs.org/wps-wizard
+
+There you may find links to icon themes.
+
+
+
+Contacting the author
+---------------------
+
+I can be reached on the #netlabs channel on e.g. 
+
+irc.aroa.ch
+irc.ecomstation.nl
+
+Visit www.ecomstation.com for more server info.
+
+
+E-mail: wps-wizard@netlabs.org
+Note:	I read every mail but because of time constraints I can't answer each and every one. Sorry...
+
+Enjoy
+
+Chris Wohlgemuth
+

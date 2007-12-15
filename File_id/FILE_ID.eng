@@ -1,0 +1,46 @@
+WPS-Wizard V0.6.0 (freeware)
+(C) Chris Wohlgemuth 1996-2007
+http://www.os2world.com/cdwriting/
+
+Requirements:
+eCS 1.2 or higher.
+Cairo runtime libraries 1.4.6. Innotek font engine.
+Libc061.dll
+
+WPS-Wizard is a set of WPS classes adding unique features to
+the WPS.
+It adds configurable context menus to every
+filesystem object of your system. You may have different
+menus for every class in addition to a set of standard
+menu items. Configuration is done using drag and drop.
+
+Additional features:
+
+- Programmable object fly over help
+- Folder toolbars (freely programmable). Change it using drag and drop.
+- Folder information area. Changeable using Rexx.
+- Gadgets for displaying information on the
+  desktop as bars or text. These are small and easy to create
+  REXX scripts.
+- Contents of image files is displayed as the icon.
+- A REXX interface is provided which gives access to the WPS
+  from user scripts. Modify functions of WPS classes using
+  REXX (similar to subclassing).
+- A preview for image files and Lucide thumbnails is added
+  to the info area of folders.
+- Change icon size up to 200x200
+- Icon engine for using PNG images as icons
+- Icon engine allows image composition using simple statements
+- Separate PNG icon package are available
+- Help and tutorial included
+- Workarounds for some WPS bugs
+
+See some sreenshots here:
+
+   http://svn.netlabs.org/wps-wizard
+
+
+English version.
+
+Licence:
+This package is provided 'as is' without any warranty.

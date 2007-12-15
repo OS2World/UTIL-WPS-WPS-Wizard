@@ -1,0 +1,34 @@
+WPS-Wizard V0.5.2 (freeware)
+(C) Chris Wohlgemuth 1996-2007
+http://www.geocities.com/SiliconValley/Sector/5785/
+http://www.os2world.com/cdwriting/
+
+Erforderlich:
+EMX-Laufzeitbibliotheken fix 4. Warp 4 oder hîher.
+Cairo-Laufzeitbibliotheken, Innotek-Fontengine.
+Libc06.dll (for Cairo).
+
+WPS-Wizard fÅgt frei konfigurierbare KontextmenÅs zu
+jeder Datei und jedem Ordner hinzu. Es ist mîglich,
+verschiedene MenÅs fÅr unterschiedliche Klassen zu
+haben. Die Konfiguration erfolgt Åber Drag'n drop.
+Frei programmierbare Objekt-Hilfe (Flyover help),
+Ordner-Werkzeugleisten und Ordner-Informationsbereich.
+Die Werkzeugleiste kann Åber Drag'n drop beliebig
+verÑndert werden. Gadgets kînnen Informationen als
+Text oder graphisch auf dem Desktop anzeigen. Dieses
+sind kurze und einfach zu erstellende REXX-Skripte.
+Icons von Bilddateien werden als Bild gezeichnet. 
+öber eine REXX-Schnittstelle haben Benutzerskripte
+Zugriff auf die WPS. Es ist mîglich, Funktionen von
+WPS-Klassen mit REXX zu modifizieren (Ñhnlich wie
+Subclassing).
+Mit einem separatem Icon-Paket kînnen mit der WPS
+PNG-Icons verwendet werden.
+Eine umfangreiche Hilfe ist verfÅgbar.
+
+Deutsche Version.
+
+Lizenz:
+This package is provided 'as is' without any warranty.
+
