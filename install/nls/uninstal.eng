@@ -1,0 +1,21 @@
+GetStrings:
+nlsStrings.1='0d'x||'0a'x||'[31;1;m Close ALL open folders now![0;m'||'0d'x||'0a'x||'0d'x||'0a'x||'Press <ENTER> to uninstall or Ctrl-c to abort.'
+nlsStrings.2='Current directory is '
+nlsStrings.3='Deleting Settings object...'
+nlsStrings.4='Can''t delete the Settings object!'
+nlsStrings.5='Deleting tutorial object...'
+nlsStrings.6='Can''t delete the tutorial object!'
+nlsStrings.7='Deregistering class '
+nlsStrings.8='Error while deregistering class '
+nlsStrings.9='Deleting configuration folders...'
+nlsStrings.10='Deleting WPS-Wizard folder...'
+nlsStrings.11='Can''t delete the WPS-Wizard folder!'
+nlsStrings.12='Press <ENTER> to quit.'
+nlsStrings.13='Press <ENTER> to continue.'
+nlsStrings.14='The WPS will be restarted now.'
+nlsStrings.15='Part 2 of uninstallation runs during WPS start.'
+
+/* # of strings */
+nlsStrings.0=15
+
+return

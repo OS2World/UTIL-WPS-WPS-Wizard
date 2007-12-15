@@ -1,0 +1,72 @@
+GetStrings:
+nlsStrings.1='Haben Sie Kopien ihrer INI-Dateien erstellt?'
+nlsStrings.2='Wenn nicht, sollten Sie jetzt abbrechen!'
+nlsStrings.3='<ENTER> zum Installieren oder Ctrl-c fÅr Abbruch.'
+nlsStrings.4='Aktuelles Verzeichnis ist '
+nlsStrings.5='Registriere Klasse '
+nlsStrings.6='Fehler beim Registrieren der Klasse '
+nlsStrings.7='Ende...'
+nlsStrings.8='Deregistriere Klasse '
+nlsStrings.9='Fehler beim Deregistrieren der Klasse '
+nlsStrings.10='Erstelle Programmordner auf der ArbeitsoberflÑche...'
+nlsStrings.11='Ordner kann nicht erstellt werden.'
+nlsStrings.12='Erstelle Konfigurationsobjekt...'
+nlsStrings.13='Konfigurationsobjekt kann nicht erstellt werden.'
+nlsStrings.14='Erstelle ein Objekt fÅr die Deinstallation...'
+nlsStrings.15='Deinstallationsobject kann nicht erstellt werden.'
+nlsStrings.16='Erstelle "EinfÅhrung in WPS-Wizard"...'
+nlsStrings.17='Kann Objekt nicht erstellen.'
+nlsStrings.18='Erstelle die MenÅordner-Schablone...'
+nlsStrings.19='Erstelle Konfigurationsordner...'
+nlsStrings.20='Erstelle Ordner fÅr MenÅ-Schablonen...'
+nlsStrings.21='MenÅ kann nicht erstellt werden.'
+nlsStrings.22='<ENTER>, um Installation abzuschlie·en.'
+nlsStrings.23="WPS-Wizard"
+nlsStrings.24="WPS-Wizard^Konfiguration"
+nlsStrings.25="Deinstalliere^WPS-Wizzard"
+nlsStrings.26="EinfÅhrung in WPS-Wizard"
+nlsStrings.27="MenÅ-Ordner"
+nlsStrings.28="MenÅ-Schablonen"
+nlsStrings.29="Dateinamen ~kopieren"
+nlsStrings.30="Diese Datei ~zippen"
+nlsStrings.31="Diesen Baum ~zippen"
+nlsStrings.32='Erstelle MenÅs...'
+nlsStrings.33='Hinweis: Die WPS mu· neu gestartet werden, damit die neuen Klassen geladen werden.'
+nlsStrings.34='MenÅ Konfiguration'
+nlsStrings.35='Erstelle Ordner fÅr Ordner-Aktionen...'
+nlsStrings.36='Ordner Aktionen'
+nlsStrings.37='Stammordner îffnen'
+nlsStrings.38='Einstellungen'
+nlsStrings.39='OS/2-Fenster'
+nlsStrings.40='Gro·es OS/2-Fenster'
+nlsStrings.41='Aktualisieren'
+nlsStrings.42='Detailanzeige'
+nlsStrings.43='Symbolanzeige'
+nlsStrings.44='Objekt kann nicht erstellt werden: '
+nlsStrings.45='Aktionsobjekte-Ordner'
+nlsStrings.46='Launchpad-Ordner'
+nlsStrings.47='OS/2-Gesamtbildschirm'
+nlsStrings.48='Alles auswÑhlen'
+nlsStrings.49='Auswahl zurÅcknehmen'
+nlsStrings.50='Gadgets'
+nlsStrings.51='Erstelle Gadget-Ordner...'
+nlsStrings.52="Zeit und Datum"
+nlsStrings.53="System^Information"
+nlsStrings.54="Laufwerks^Information"
+nlsStrings.55="z!-Info"
+nlsStrings.56="Kalender"
+nlsStrings.57="Datei-öberwachung"
+nlsStrings.58="BinÑre Uhr"
+
+nlsStrings.59='0d'x||'0a'x||'[31;1;m EinFehler ist aufgetreten. WPS-Wizard ist nicht vollstÑndig installiert.[0;m'||'0d'x||'0a'x||'0d'x||'0a'x||'Benutzen Sie ein Programm wie checkini, um die INI-Dateien zu ÅberprÅfen/reparieren.'
+
+nlsStrings.60='Die WPS wird nun neu gestartet.'
+nlsStrings.61='Teil 2 der Installation findet statt wenn die WPS startet.'
+
+nlsStrings.62='<ENTER>, um fortzufahren.'
+
+/* # of strings */
+nlsStrings.0=62
+
+return
+

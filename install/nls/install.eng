@@ -1,0 +1,71 @@
+GetStrings:
+nlsStrings.1='Be sure to have a backup of your INI-files!'
+nlsStrings.2='If not abort NOW'
+nlsStrings.3='Press <ENTER> to install or Ctrl-c to abort.'
+nlsStrings.4='Current directory is '
+nlsStrings.5='Registering class '
+nlsStrings.6='Error while registering class '
+nlsStrings.7='Exiting...'
+nlsStrings.8='Deregistering class '
+nlsStrings.9='Error while deregistering class '
+nlsStrings.10='Creating a folder on the desktop...'
+nlsStrings.11='Can''t create the folder.'
+nlsStrings.12='Creating Settings object...'
+nlsStrings.13='Cannot create Settings object.'
+nlsStrings.14='Creating an object for uninstallation in the folder...'
+nlsStrings.15='Can''t create the uninstallation object.'
+nlsStrings.16='Creating an object for the tutorial in the folder...'
+nlsStrings.17='Can''t create the tutorial object.'
+nlsStrings.18='Creating a Menu-folder template...'
+nlsStrings.19='Creating default configuration folders...'
+nlsStrings.20='Creating folder for menu item templates...'
+nlsStrings.21='Can''t create item.'
+nlsStrings.22='Press <ENTER> to quit.'
+nlsStrings.23="WPS-Wizard"
+nlsStrings.24="WPS-Wizard configuration"
+nlsStrings.25="Uninstall^WPS-Wizzard"
+nlsStrings.26="Tutorial"
+nlsStrings.27="Menu folder"
+nlsStrings.28="Menu templates"
+nlsStrings.29="Copy ~filename"
+nlsStrings.30="~Zip this file"
+nlsStrings.31="~Zip this tree"
+nlsStrings.32='Creating menu items...'
+nlsStrings.33='Note: the WPS must be restarted to load the new classes.'
+nlsStrings.34='Menu configuration'
+nlsStrings.35='Creating folder for folder action objects...'
+
+nlsStrings.36='Toolbar buttons'
+nlsStrings.37='Open parent'
+nlsStrings.38='Settings'
+nlsStrings.39='OS/2 window'
+nlsStrings.40='Wide OS/2 window'
+nlsStrings.41='Refresh'
+nlsStrings.42='Details view'
+nlsStrings.43='Icon view'
+nlsStrings.44='Object cannot be created: '
+nlsStrings.45='folder for action objects'
+nlsStrings.46='Launchpad folder'
+nlsStrings.47='OS/2 full screen'
+nlsStrings.48='Select all'
+nlsStrings.49='Deselect all'
+nlsStrings.50='Gadgets'
+nlsStrings.51='Creating gadget folder...'
+nlsStrings.52="Time and date"
+nlsStrings.53="System^Information"
+nlsStrings.54="Drive^Information"
+nlsStrings.55="z!-Info"
+nlsStrings.56="Calendar"
+nlsStrings.57="File monitor"
+nlsStrings.58="Binary clock"
+
+nlsStrings.59='0d'x||'0a'x||'[31;1;m An error occured. WPS-Wizard is not installed properly.[0;m'||'0d'x||'0a'x||'0d'x||'0a'x||'Use a tool like checkini to check/repair your INI files.'
+
+nlsStrings.60='The WPS will be restarted now.'
+nlsStrings.61='Part 2 of installation runs during WPS start.'
+nlsStrings.62='Press <ENTER> to continue.'
+
+/* # of strings */
+nlsStrings.0=62
+
+return
