@@ -1,6 +1,11 @@
 History
 -------
 
+V0.6.1
+
+-Fixed (?) crash because of stack problems (ticket #6)
+
+
 V0.6.0 (09.12.2007)
 
 -Updates to readme file
