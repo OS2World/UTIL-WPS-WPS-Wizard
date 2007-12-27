@@ -32,7 +32,7 @@ BEGIN
     DIALOG  "", ID_FILEOPTIONPAGE, 91, 22, 201, 199, NOT FS_DLGBORDER | 
             WS_VISIBLE
     BEGIN
-        LTEXT           "C. Wohlgemuth   (C) 1996-2006", IDST_AUTHOR, 15, 121, 156, 15, 
+        LTEXT           "C. Wohlgemuth   (C) 1996-2008", IDST_AUTHOR, 15, 121, 156, 15, 
                         NOT WS_GROUP
                         PRESPARAMS PP_FONTNAMESIZE, "12.Helv"
         AUTOCHECKBOX    " REXX-~Skripte aktivieren  ", ID_ENABLEREXX, 15, 105, 
