@@ -7,6 +7,7 @@ V0.6.1
 -Disabled edit button for OS/2 icons
 -Fixed trap during painting of icons in freshly opened folders (missing paint context)
 -"Normal sized Symbols" was never check marked in view menu
+-Fixed abort of automated folder opening when using DragText thanks to some info from the author
 
 
 V0.6.0 (09.12.2007)
