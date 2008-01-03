@@ -45,7 +45,6 @@ myExit:
 
 call SysIni "USER" ,"IconTheme", "IconFolder", DIRECTORY()||'00'x
 
-SAY "You have to restart the WPS now."
 'PMREXX /Q '||theScript||' msg'
 
 exit
