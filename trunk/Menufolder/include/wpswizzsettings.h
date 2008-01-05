@@ -1,7 +1,4 @@
-
-
 #ifndef PMWP_INCLUDED
-
 #define  SETTINGS_PAGE_NUMBERS     0x01
 
 typedef struct _PAGEINFO
@@ -25,33 +22,13 @@ typedef struct _PAGEINFO
 } PAGEINFO;
 
 typedef PAGEINFO *PPAGEINFO;
-
 #endif
 
-int wpwizzQueryNumFuncs(int  iVersion); /* Returns num funcs or zero */
+#define SETTINGS_CLASSNAME         "CWWizzSettings"
+#define HELPFILENAME "menufold.hlp"
 
-BOOL wpwizzLoad(void * structFunctions, int iNumFuncs);
-BOOL wpwizzUnload(HINI hIni);
-
-
-void wpwizzRefreshSettings(HINI hIni, ULONG ulReserved);
-BOOL wpwizzSave();
-BOOL wpwizzRestore();
-
-BOOL wpwizzCheckVersion(int  iVersion);
-BOOL wpwizzAddSettingsPages( int iNumPage, PAGEINFO * pageInfo, HWND hwndNotebook);
-
-
-typedef BOOL (APIENTRY FN_2)(int iNumPage, PAGEINFO * pageInfo, HWND hwndNotebook);
-typedef FN_2 * PFN_2 ;
-
-#define calcVersion(ma, mi, b) ((ma<<16)+(mi<<8)+b)
-
-typedef int (APIENTRY FN_1)(int iVersion);
-typedef FN_1 * PFN_1 ;
-
-#define INITDLLS_MSGPARAM            0
-#define FREEDLLS_MSGPARAM          1
+#define ID_OPTIONPAGENAME       1003
+#define ID_CONFIGURATIONCLASSNAME  2000
 
 
 
