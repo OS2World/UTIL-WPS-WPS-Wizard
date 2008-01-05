@@ -25,9 +25,8 @@
 
 #include <os2.h>
 
-#include "newfile.h"
+#include "menufolder.h"
 #include "newfileDlg.h"
-//#include "debug.h"
 #include "except.h"
 #include <rexxsaa.h>                   /* needed for RexxStart()     */
 

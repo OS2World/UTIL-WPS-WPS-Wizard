@@ -25,7 +25,6 @@
 #define INCL_GPI
 
 #include <os2.h>
-#include "newfile.h"
 #include "newfileDlg.h"
 #include "except.h"
 #include <rexxsaa.h>                   /* needed for RexxStart()     */
