@@ -25,9 +25,7 @@
 
 #include <os2.h>
 
-#include "newfile.h"
 #include "newfileDlg.h"
-//#include "debug.h"
 #include "except.h"
 
 /* Include file with definition for WPShadow class */
