@@ -23,8 +23,6 @@
 
 #include <os2.h>
 
-//#include "newfile.h"
-
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <string.h>//for strcpy
