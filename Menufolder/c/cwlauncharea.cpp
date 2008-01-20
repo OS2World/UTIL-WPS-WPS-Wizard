@@ -1,21 +1,13 @@
 /*
- * This file is (C) Chris Wohlgemuth 1996/2007
- */
-/*
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2, or (at your option)
- * any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; see the file COPYING.  If not, write to
- * the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
- */
+  This file is (C) Chris Wohlgemuth 1996/2008
+
+  This file is copyrighted.
+
+  For licensing contact cinc-ml@netlabs.org
+
+  No use or copying without prior permission.
+
+*/
 
 #define INCL_DOS
 #define INCL_DOSERRORS
@@ -39,8 +31,10 @@
 #include "defines.h"
 #include "sys_funcs.h"
 
-#define CW_LAUNCHAREA       "CW_LAUNCHAREA"
-#define LAUNCHAREA_DATASIZE 4
+/* launcharea specific defines */
+#include "cwlauncharea_inc.h"
+
+
 /* Vars for launcharea class */
 ULONG   g_ulStaticDataOffset=0;
 PFNWP   g_pfnwpOrgStaticProc=NULLHANDLE;
@@ -48,11 +42,10 @@ ULONG   ulQWP_LAUNCHAREADATA=0;
 
 static BOOL fInitCWLADone=FALSE;
 
-#define LP_USEOBJECTASPARAM  0x00000001
-#define WPSWIZARD_TBID "<WPSWIZARD_TOOLBAR>"
+//#define LP_USEOBJECTASPARAM  0x00000001
 
-#define VIEW_LAUNCHAREA  WPMENUID_USER+0x1000
-//#define VIEW_LAUNCHAREA  0x1000
+/* This one should go in an include file */
+#define WPSWIZARD_TBID "<WPSWIZARD_TOOLBAR>"
 
 #define  WM_NEWBUBBLE   WM_USER+100 //Use ATOM later
 #define xButtonDelta 2
@@ -70,6 +63,8 @@ extern int iTBFlyOverDelay;
 
 static ULONG ulIconSize=40;
 static HAB g_hab;
+
+/* launcharea SOM stuff */
 #include "cwlauncharea.hh"
 
 static WPObject* _wpGetWPObjectFromPath(WPObject *wpObject, char* chrPath)
@@ -158,7 +153,7 @@ static BOOL doDrawUserButton(HWND hwnd, HPS hps, BOOL fHilite)
         SysWriteToTrapLog("%s %d: %d\n", __FUNCTION__, __LINE__, rcl.xRight-rcl.xLeft);
       }
 #endif
-      WinFillRect(hps, &rcl, CLR_PALEGRAY /*0x00ff0000*/);
+      WinFillRect(hps, &rcl, CLR_LAUNCHAREA /*CLR_PALEGRAY*/);
       if(fHilite)
         WinDrawBorder(hps, &rcl, 2, 2, 0, 0, 0x800);
 #if 0
@@ -659,7 +654,11 @@ static MRESULT handleDragLeave(HWND hwnd, MPARAM mp1, MPARAM mp2)
   return (MRESULT) FALSE;
 }
 
-
+/*
+  Window procedure handling the launcharea window class (CW_LAUNCHAREA). Because the
+  buttons on the launcharea are user buttons all paint messages for the buttons will
+  end up here, too.
+ */
 static MRESULT EXPENTRY fnwpLaunchAreaProc(HWND hwnd, ULONG msg, MPARAM mp1, MPARAM mp2) 
 {
   CWLaunchArea *somSelf;
@@ -785,7 +784,7 @@ static MRESULT EXPENTRY fnwpLaunchAreaProc(HWND hwnd, ULONG msg, MPARAM mp1, MPA
         CWLaunchArea * lp;
         HPS hps=WinBeginPaint(hwnd,NULLHANDLE, &rcl);
 
-        WinFillRect(hps, &rcl, SYSCLR_DIALOGBACKGROUND);
+        WinFillRect(hps, &rcl, CLR_LAUNCHAREA);
         lp=(CWLaunchArea*)WinQueryWindowULong(hwnd,QWL_USER);
         if(somIsObj(lp)) {
             WinQueryWindowRect(hwnd,&rcl);
