@@ -1,3 +1,13 @@
+/*
+  (c) Chris Wohlgemuth 1996/2008
+
+  This file is copyrighted.
+
+  For licensing contact cinc-ml@netlabs.org
+
+  No use without prior permission.
+*/
+
 #define INCL_WINWORKPLACE
 #define INCL_WIN
 #define INCL_DOS
@@ -1618,7 +1628,7 @@ MRESULT EXPENTRY htmlProc(HWND hwnd, ULONG msg, MPARAM mp1, MPARAM mp2)
         }
 #endif
         else
-          WinFillRect(hps, &rcl, 0x00FFFFFF);
+          WinFillRect(hps, &rcl, SYSCLR_WINDOW /* 0x00FFFFFF*/ );
 
         drawItNow(hwnd, hps, &rcl, 0, 0);
 

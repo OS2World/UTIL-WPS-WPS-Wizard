@@ -1,3 +1,13 @@
+/*
+  (c) Chris Wohlgemuth 1996/2008
+
+  This file is copyrighted.
+
+  For licensing contact cinc-ml@netlabs.org
+
+  No use or copying without prior permission.
+*/
+
 #define INCL_WINWORKPLACE
 #define INCL_WIN
 #define INCL_DOS
@@ -66,9 +76,9 @@ static void drawIcon(HWND hwnd, HPS hps, RECTL rcl)
               OWNERITEM oi={0};
               ULONG fl=0;
               BOOL rc;
-              PPAINTCTXT pPaintCtxt;
 
 #if 0
+              PPAINTCTXT pPaintCtxt_;
               if(!CWThemeMgrObject)
                 break;
               
@@ -87,7 +97,9 @@ static void drawIcon(HWND hwnd, HPS hps, RECTL rcl)
               oi.rclItem=rcl;
               oi.idItem=CMA_ICON;
               oi.hItem=(ULONG)&cdii;
-                           
+     
+              /* The draw emphasis call is only to get the paintcontext filled with the
+               background color. May go away when cairo 1.4.7 is used. */
               rc=_wizDrawIconEmphasis(pWCtlData->wpObject, &oi, 30, fl);
               rc=_wizDrawIcon(pWCtlData->wpObject, &oi, 30, fl);
 
@@ -153,7 +165,7 @@ MRESULT EXPENTRY previewControlProc(HWND hwnd, ULONG msg, MPARAM mp1, MPARAM mp2
           WinFillRect(hps, &rcl, (LONG) lBg);
         }
         else
-          WinFillRect(hps, &rcl, 0x00FFFFFF);
+          WinFillRect(hps, &rcl, SYSCLR_WINDOW /* 0x00FFFFFF*/ );
         
         /* Paint preview here */
         paintPreview(hwnd, hps, &rcl);
@@ -226,11 +238,10 @@ MRESULT EXPENTRY folderInfoProc(HWND hwnd, ULONG msg, MPARAM mp1, MPARAM mp2)
                              &bg, QPF_PURERGBCOLOR|QPF_ID2COLORINDEX /*QPF_NOINHERIT*/)) {
           lBg=(bg.bRed<<16)+(bg.bGreen<<8) + bg.bBlue;
           /* Set it */
-          //HlpWriteToTrapLog("0x%x %x %x %x %d\n", lBg, bg.bRed, bg.bGreen, bg.bBlue, attrFound);
           WinFillRect(hps, &rcl, (LONG) lBg);
         }
         else
-          WinFillRect(hps, &rcl, 0x00FFFFFF);
+          WinFillRect(hps, &rcl, SYSCLR_WINDOW /* 0x00FFFFFF*/ );
 
         drawIcon(hwnd, hps, rcl);
 
