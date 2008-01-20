@@ -1,7 +1,8 @@
 #ifndef OS2_INCLUDED
    #include <os2.h>
 #endif
-#include "newfile.h"
+#include "menufolder.h"
+#include "wpswizzsettings.h"
 #include "newfiledlg.h"
 
 ICON ID_ICONSETTINGS MWIZ.ico
