@@ -1615,7 +1615,7 @@ MRESULT EXPENTRY htmlProc(HWND hwnd, ULONG msg, MPARAM mp1, MPARAM mp2)
         }
 #endif
         else
-          WinFillRect(hps, &rcl, 0x00FFFFFF);
+          WinFillRect(hps, &rcl, SYSCLR_WINDOW /* 0x00FFFFFF*/ );
         
         drawItNow(hwnd, hps, &rcl, 0, 0);
 
