@@ -1615,7 +1615,6 @@ MRESULT EXPENTRY htmlProc(HWND hwnd, ULONG msg, MPARAM mp1, MPARAM mp2)
           lBg=(bg.bRed<<16)+(bg.bGreen<<8) + bg.bBlue;
           /* Set it */
           WinFillRect(hps, &rcl, (LONG) lBg);
-          //     WinFillRect(hps, &rcl, 0x00FFFFFF);
         }
 #else
         // Query the current background colour (inherited from parent)
@@ -1637,6 +1636,32 @@ MRESULT EXPENTRY htmlProc(HWND hwnd, ULONG msg, MPARAM mp1, MPARAM mp2)
       }
     case WM_PRESPARAMCHANGED:
       {
+        MRESULT mr;
+
+        if(g_oldStatic)
+          mr=g_oldStatic( hwnd, msg, mp1, mp2);
+        else
+          mr=WinDefWindowProc( hwnd, msg, mp1, mp2);
+
+#if 0
+        DosBeep(3000, 20);
+        /* Forward presentation parameters to the windows on the top */
+        SysWriteToTrapLog("%s:\n", __FUNCTION__);
+
+        switch(LONGFROMMP(mp1))
+          {
+          case PP_BACKGROUNDCOLOR:
+            SysWriteToTrapLog("PP_BACKGROUNDCOLOR\n");
+            break;
+          case PP_FONTNAMESIZE:
+            SysWriteToTrapLog("PP_FONTNAMESIZE\n");
+          case PP_FOREGROUNDCOLOR:
+            SysWriteToTrapLog("%s: PP_FOREGROUNDCOLOR\n", __FUNCTION__);
+          default:
+            break;
+          };
+        SysWriteToTrapLog("\n");
+#endif
         switch(LONGFROMMP(mp1))
           {
 #if 0
@@ -1663,11 +1688,10 @@ MRESULT EXPENTRY htmlProc(HWND hwnd, ULONG msg, MPARAM mp1, MPARAM mp2)
               if(WinQueryPresParam(hwnd,
                                    PP_FOREGROUNDCOLOR,0,&attrFound,sizeof(fg),
                                    &fg, QPF_NOINHERIT))
-
+                
                 wndData->lForeColor=(LONG)fg;
-            break;
+              break;
             }
-
           case PP_FONTNAMESIZE:
             {
               HTMLWNDDATA* wndData=(HTMLWNDDATA*)WinQueryWindowULong(hwnd, ulQWP_WNDDATA);
@@ -1681,12 +1705,14 @@ MRESULT EXPENTRY htmlProc(HWND hwnd, ULONG msg, MPARAM mp1, MPARAM mp2)
                 formatText( hwnd,  &rcl);
 
                 WinInvalidateRect(hwnd, NULLHANDLE, TRUE);
+                break;
               }
             }
           default:
             break;
           }
-        break;
+        return mr;
+        // break;
       }
       /* Vertical slider */
     case WM_VSCROLL:
@@ -1910,6 +1936,8 @@ MRESULT EXPENTRY htmlProc(HWND hwnd, ULONG msg, MPARAM mp1, MPARAM mp2)
           WinSetWindowULong(hwnd, ulQWP_WNDDATA, (ULONG)wndData);
 
           // Set the font
+          /* If the font isn't set properly the code will more or less randomly grab some font. Note
+             that by setting the font here the set font of a folder container is *not* used. */
           WinSetPresParam(hwnd,
                           PP_FONTNAMESIZE,(ULONG) strlen(fontName)+1, /* +1 because of terminating 0 */
                           fontName);

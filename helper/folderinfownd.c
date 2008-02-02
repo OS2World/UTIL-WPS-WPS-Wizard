@@ -250,19 +250,37 @@ MRESULT EXPENTRY folderInfoProc(HWND hwnd, ULONG msg, MPARAM mp1, MPARAM mp2)
       }
     case WM_PRESPARAMCHANGED:
       {
-        char fontName[255];
-        ULONG  len;
-        ULONG  attrFound;
+#if 0
+        DosBeep(3000, 20);
+        /* Forward presentation parameters to the windows on the top */
 
-        len=WinQueryPresParam(hwnd,
-                              //len=WinQueryPresParam(WinQueryWindow(hwnd, QW_PARENT),
-                              PP_FONTNAMESIZE,0,&attrFound,sizeof(fontName),
-                              fontName, 0 /*QPF_NOINHERIT*/);
+        switch(LONGFROMMP(mp1))
+          {
+          case PP_BACKGROUNDCOLOR:
+            SysWriteToTrapLog("PP_BACKGROUNDCOLOR\n");
+            break;
+          case PP_FONTNAMESIZE:
+            SysWriteToTrapLog("PP_FONTNAMESIZE\n");
+          default:
+            break;
+          };
+        SysWriteToTrapLog("\n");
+#endif
 
+        if(PP_FONTNAMESIZE==LONGFROMMP(mp1))
+          {
+            char fontName[255];
+            ULONG  len;
+            ULONG  attrFound;
 
-        WinSetPresParam(WinWindowFromID(hwnd, FLDRINFO_WINDOWID_TEXTCTRL),PP_FONTNAMESIZE,
-                   len, fontName);
-
+            len=WinQueryPresParam(hwnd,
+                                  //len=WinQueryPresParam(WinQueryWindow(hwnd, QW_PARENT),
+                                  PP_FONTNAMESIZE,0,&attrFound,sizeof(fontName),
+                                  fontName, 0 /*QPF_NOINHERIT*/);
+            
+            WinSetPresParam(WinWindowFromID(hwnd, FLDRINFO_WINDOWID_TEXTCTRL),PP_FONTNAMESIZE,
+                            len, fontName);
+          }
         break;
       }
     case WM_SETWINDOWPARAMS:
