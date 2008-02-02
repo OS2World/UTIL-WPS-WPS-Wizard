@@ -17,6 +17,7 @@
  * the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 #define INCL_DOS
+#define INCL_DOSDEVIOCTL
 #define INCL_DOSERRORS
 #define INCL_WIN
 #define INCL_WINWORKPLACE
@@ -116,6 +117,40 @@ void sendCommandToObject(char* chrObject, char* command)
   }
 }
 
+static USHORT queryShiftState(void)
+{
+    USHORT     usRc=0;
+    HFILE      hf;
+    ULONG      ulAction;
+
+    if (NO_ERROR==DosOpen("KBD$", &hf, &ulAction, 0, FILE_NORMAL,
+                          OPEN_ACTION_OPEN_IF_EXISTS, /* fsOpenFlags */
+                          OPEN_ACCESS_READONLY | OPEN_SHARE_DENYNONE,
+                          NULLHANDLE))
+      {
+        SHIFTSTATE      ss;
+        ULONG           cbDataLen = sizeof(ss);
+        
+        if (NO_ERROR == DosDevIOCtl(hf, IOCTL_KEYBOARD, KBD_GETSHIFTSTATE,
+                                    NULL, 0, NULL, &ss, cbDataLen, &cbDataLen))
+          {
+            usRc=ss.fsState;
+          }/* DosDevIOCtl() */
+        DosClose(hf);
+      }/* DosOpen() */
+
+    return usRc;
+}
+
+/*
+  This function returns true if the Alt and the Ctrl keys are currently pressed.
+ */
+BOOL SysQueryAltCtrlPressed(void)
+{
+  /* Either Alt and Ctrl key */
+  return ((queryShiftState() & 12)!=0);
+}
+
 
 #if __cplusplus
 }
@@ -162,10 +197,6 @@ PSZ deleteTilde(PSZ orgPSZ, char *resultString, int iSize)
 	}
 	return resultString;	
 }
-
-
-
-
 
 
 
