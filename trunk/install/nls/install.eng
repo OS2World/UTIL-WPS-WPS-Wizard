@@ -1,5 +1,5 @@
 GetStrings:
-nlsStrings.1='Be sure to have a backup of your INI-files!'
+nlsStrings.1='0d'x||'0a'x||'[31;1;m Be sure to have a backup of your INI-files![0;m'||'0d'x||'0a'x||'0d'x||'0a'x
 nlsStrings.2='If not abort NOW'
 nlsStrings.3='Press <ENTER> to install or Ctrl-c to abort.'
 nlsStrings.4='Current directory is '
