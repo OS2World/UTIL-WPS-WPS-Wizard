@@ -1,8 +1,9 @@
 /*           Install for WPS-Wizard
  *
- *                   (C) Chris Wohlgemuth 2001-2007
+ *                   (C) Chris Wohlgemuth 2001-2008
+ *
+ *  Note that the following license text only applies to this script.
  */
-
 /*
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,10 +41,11 @@ curdir = directory()
 rc=SysIni(, "WPSWizard", "installing")
 
 
-if rc<>"yes" THEN DO
+if rc<>"1" THEN DO
 	/* First phase */
 
 	/* Welcome screen */
+	SAY ''
 	SAY nlsStrings.1 /* 'Be sure to have a backup of your INI-files!' */
 	SAY nlsStrings.2 /* 'If not abort NOW' */
 	say ''
@@ -58,6 +60,9 @@ if rc<>"yes" THEN DO
 	/* Some cleanup... */
 	rc=SysIni(, "WPSWizard", "uninstalling", "DELETE:")
 
+	/* Mark that we are installing */
+        rc=SysIni(, "WPSWizard", "installing", 1'0'x)
+	
 	/* 'Current directory is ' */
 	say nlsStrings.4||curdir
 	say ''
@@ -133,9 +138,7 @@ if rc<>"yes" THEN DO
 
 	/* Replacing class */
 	'bin\repclass WPObject CWObject'
-
-	rc=SysIni(, "WPSWizard", "installing", "yes")
-
+	
 	PARSE SOURCE . . theScript
 
 	setupstring="EXENAME="||theScript||";MINIMIZED=NO;MINWIN=HIDE;OBJECTID=<WPSWIZ_INSTALL_PART2>;"
@@ -167,7 +170,7 @@ END /* 1. phase */
 SAY "Waiting some seconds for the WPS to load..."
 SAY ""
 
-DO a=10 to 1 BY -1
+DO a=15 to 1 BY -1
 	SAY "..."||a||"..."
 	call SysSleep 1
 END
@@ -588,6 +591,8 @@ exit
 
 
 unexpectedExit:
+
+rc=SysIni(, "WPSWizard", "installing", "DELETE:")
 say ''
 say nlsStrings.59
 say ''
