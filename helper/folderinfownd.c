@@ -46,8 +46,9 @@ ULONG  ulQWP_FLDRINFOWNDDATA;
 
 extern ULONG ulQWP_FCTRLDATA;
 
-extern BOOL g_fUseCairoForIconPainting;
 extern CWThemeMgr* CWThemeMgrObject;
+/* For debugging and really secret options */
+extern ULONG g_ulDevOptions;
 
 /*
   This function paints the icon of the folder the info area belongs to at the top ot the
@@ -66,9 +67,8 @@ static void drawIcon(HWND hwnd, HPS hps, RECTL rcl)
 
   if(somIsObj(pWCtlData->wpObject))
     {
-      if(g_fUseCairoForIconPainting)
+      if(!(g_ulDevOptions & DEV_DISABLE_CAIRO_DRAWING))
         {
-
           for(;;)
             {
               MINIRECORDCORE mrec={0};
@@ -76,14 +76,11 @@ static void drawIcon(HWND hwnd, HPS hps, RECTL rcl)
               OWNERITEM oi={0};
               ULONG fl=0;
               BOOL rc;
-
 #if 0
               PPAINTCTXT pPaintCtxt_;
               if(!CWThemeMgrObject)
-                break;
-              
-              pPaintCtxt=_wizRequestAPaintCtxt(CWThemeMgrObject, NULLHANDLE);
-              
+                break;              
+              pPaintCtxt=_wizRequestAPaintCtxt(CWThemeMgrObject, NULLHANDLE);              
               if(!pPaintCtxt)
                 break;
 #endif
@@ -107,7 +104,7 @@ static void drawIcon(HWND hwnd, HPS hps, RECTL rcl)
                 return;
               break;
             }/* for */
-        }
+        }/* if */
 
 #ifdef SMALL_INFO_ICON
       WinDrawPointer(hps, (rcl.xLeft+DELTA_ICON), rcl.yTop-DELTA_ICON-WinQuerySysValue(HWND_DESKTOP, SV_CXICON)/2,
@@ -115,8 +112,7 @@ static void drawIcon(HWND hwnd, HPS hps, RECTL rcl)
 #else
       WinDrawPointer(hps, (rcl.xLeft+DELTA_ICON), rcl.yTop-DELTA_ICON-WinQuerySysValue(HWND_DESKTOP, SV_CXICON),
                      _wpQueryIcon(pWCtlData->wpObject), DP_NORMAL /*DP_MINI*/);
-#endif
-      
+#endif     
     }/* wpObject */
   return;
 }
