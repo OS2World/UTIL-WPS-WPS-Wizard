@@ -1,13 +1,27 @@
 History
 -------
 
-V0.6.1
+V0.6.1a2 (03.Feb.2008)
+
+-Wrong language resources were added to DLL (ticket #10)
+-Toolbar buttons use background color of toolbar now (ticket #12)
+-Use system window color when painting info area (part of ticket #13)
+-Emergency dialog when pressing Alt-Ctrl during WPS start
+-Some changes to the installation process
+-Updates to the documentation with regard to crash recovery
+
+
+V0.6.1a1 (12.01.2008) (fixpack)
 
 -Fixed (?) crash because of stack problems (ticket #6)
 -Disabled edit button for OS/2 icons
 -Fixed trap during painting of icons in freshly opened folders (missing paint context)
 -"Normal sized Symbols" was never check marked in view menu
--Fixed abort of automated folder opening when using DragText thanks to some info from the author
+-Fixed (?) abort of automated folder opening when using DragText thanks to some info from the author
+-Fixed ticket #8. Icon editing failed when no theme was installed
+-Experimental feature: user defined icon sizes. Create a key under the application 'IconTheme' named
+ 'IconSize' in os2.ini and set the size in percent, e.g. 150. You may use all the sizes found in the
+ 'View' menu. Note that this also works when no theme is installed.
 
 
 V0.6.0 (09.12.2007)

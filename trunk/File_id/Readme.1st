@@ -1,4 +1,4 @@
-WPS-Wizard 09.12.2007
+WPS-Wizard 03.02.2008
 ---------------------
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -69,11 +69,65 @@ belonging to the ID is already destroyed it's advised to remove
 the old installation folder completely (make sure not to use the
 trashcan) and run checkini afterwards.
 
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Create a WPS archive before installation. Open the settings notebook
+of the desktop and go to the 'Archive' page. Read the help for more
+information. 
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
 For installation move this directory to the desired location
 and run install.cmd. 
 The directory can't be moved afterwards because the DLLs
 are locked by the WPS.
 
+
+Crash recovery
+--------------
+
+If your WPS does not start anymore reboot and press Alt-F1 when the white eCS blob
+is shown in the upper left corner. Reinstall the archive you created prior to
+installation.
+
+If you want to debug your problem press Alt-Ctrl when the WPS starts up. A recovery
+dialog pops up you may use to disable features of WPS-Wizard.
+
+The following options are available.
+
+# Use eCS Icon drawing:
+
+  Don't replace the functions used to draw icons. Note that this will disable hints, too.
+  Cairo is still used to load PNG images. 
+
+# No *.DLL loading tweak:
+
+  Don't use a workaround to improve DLL loading by the WPS. Should be save to select.
+
+# No class image loading
+
+  Don't load PNG images for classes.
+
+# No object image loading from INI
+
+  Ignore references to PNG images in the theme ini for objects.
+
+# No user image loading
+
+  Don't load images assigned using the icon page in the settings.
+
+# No Cairo icon drawing.
+
+  Load PNG images but draw using eCS icon functions.
+
+# Recover
+
+  A recover feature renames the class DLL and prevents the WPS from loading any WPS-Wizard
+  class. Refrences to the classes are still in your INI but this will not do any harm.
+
+If you try to find a problem start without an installed theme first.
 
 
 Problems
@@ -100,8 +154,11 @@ Problems
 
 - The icon editor is disabled for normal OS/2 icons if PNG icons are used
 
+- WPS-Wizard does not work with the Turbo Folders feature of XWorkplace
+
 
 Trap information is written to 'wpswiz.log' on your bootdrive.
+
 
 
 Bug reports
@@ -130,6 +187,13 @@ Use guest/netlabs to login.
 
 Icon themes
 -----------
+
+Icon themes can be found at
+
+  ftp://ftp.netlabs.org/pub/wps-wizard/
+
+Note that icon themes shouldn't be installed in a path containing spaces.
+
 
 Older icon themes designed for V0.5.3 don't work with this release of WPS-Wizard.
 
@@ -176,7 +240,7 @@ irc.ecomstation.nl
 Visit www.ecomstation.com for more server info.
 
 
-E-mail: wps-wizard@netlabs.org
+E-mail: wps-wizard at netlabs.org
 Note:	I read every mail but because of time constraints I can't answer each and every one. Sorry...
 
 Enjoy
