@@ -40,6 +40,9 @@ curdir = directory()
 /* Check the install phase we are in */
 rc=SysIni(, "WPSWizard", "installing")
 
+/* remove trailing '0' */
+IF LENGTH(rc)>1 THEN rc=LEFT(rc, 1)
+
 
 if rc<>"1" THEN DO
 	/* First phase */
