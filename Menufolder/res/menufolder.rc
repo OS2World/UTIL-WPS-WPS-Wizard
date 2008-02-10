@@ -45,7 +45,7 @@ BEGIN
                         130, 10, WS_GROUP
         AUTOCHECKBOX    " Kein ~Formatieren-Menue", ID_NOFORMATMENUE, 15, 50, 
                         142, 10
-        AUTOCHECKBOX    " Erweitertes ~KontextmenÅ ", ID_CONTEXTMENUE, 15, 
+        AUTOCHECKBOX    " Erweiterte ~MenÅs ", ID_CONTEXTMENUE, 15, 
                         36, 142, 10
         PUSHBUTTON      "Hilfe", ID_OPTIONHELP, 59, 15, 40, 14, BS_HELP
     END

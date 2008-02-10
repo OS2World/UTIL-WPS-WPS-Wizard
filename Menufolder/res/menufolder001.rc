@@ -45,7 +45,7 @@ BEGIN
                         130, 10, WS_GROUP
         AUTOCHECKBOX    "~Remove format menuitem", ID_NOFORMATMENUE, 15, 50, 
                         142, 10
-        AUTOCHECKBOX    "Extended ~context menu ", ID_CONTEXTMENUE, 15, 36, 
+        AUTOCHECKBOX    "Extended ~menus ", ID_CONTEXTMENUE, 15, 36, 
                         142, 10
         PUSHBUTTON      "~Help", ID_OPTIONHELP, 59, 15, 40, 14, BS_HELP
     END
