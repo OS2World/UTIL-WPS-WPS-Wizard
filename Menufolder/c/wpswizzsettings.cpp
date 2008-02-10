@@ -454,12 +454,9 @@ ULONG CWWizzSettings::wpAddObjectWindowPage(HWND hwndNotebook)
 static MRESULT EXPENTRY FileOptionDlgProc(HWND hwnd, ULONG msg, MPARAM mp1, MPARAM mp2) {
 	PAGEINFO pageInfo;
 	HINI hini;
-	HOBJECT  hObject;
 	ULONG  attrFound;
 	ULONG  len;
-    CWWizzSettings* thisPtr;
-	
-
+    CWWizzSettings* thisPtr;	
 	
 	switch(msg) {
 	case WM_INITDLG :
@@ -502,21 +499,24 @@ static MRESULT EXPENTRY FileOptionDlgProc(HWND hwnd, ULONG msg, MPARAM mp1, MPAR
       case BN_CLICKED:
         {
           char chrPath[CCHMAXPATH];
+          HOBJECT  hObject;
 
+          /* There is always a config.sys file on the boot drive */
           DosQuerySysInfo(QSV_BOOT_DRIVE, QSV_BOOT_DRIVE, &attrFound, sizeof(attrFound));
           sprintf(chrPath,"%c:\\config.sys", 'A'+attrFound-1);
+          hObject=WinQueryObject(chrPath);
 
           switch(SHORT1FROMMP(mp1)) {
           case IDCB_FLDRINFOWINDOW:
             if(g_fInfoWindowEnabled){
               g_fInfoWindowEnabled=FALSE;
-              if((hObject=WinQueryObject(chrPath))!=NULLHANDLE) {
+              if(hObject!=NULLHANDLE) {
                 WinSetObjectData(hObject, SETUP_ENABLEINFOWINDOW"=0");/* This is catched in wpSetup() of CWObject */
               }
               ulOptions&=~INFOWINDOWENABLED;
             }// end if
             else {
-              if((hObject=WinQueryObject(chrPath))!=NULLHANDLE) {
+              if(hObject!=NULLHANDLE) {
                 WinSetObjectData(hObject, SETUP_ENABLEINFOWINDOW"=1");/* This is catched in wpSetup() of CWObject */
               }
               g_fInfoWindowEnabled=TRUE;
@@ -526,13 +526,13 @@ static MRESULT EXPENTRY FileOptionDlgProc(HWND hwnd, ULONG msg, MPARAM mp1, MPAR
           case ID_ENABLEHINTS:
             if(g_fHintsEnabled){
               g_fHintsEnabled=FALSE;
-              if((hObject=WinQueryObject(chrPath))!=NULLHANDLE) {
+              if(hObject!=NULLHANDLE) {
                 WinSetObjectData(hObject,SETUP_ENABLEHINTS"=0");/* This is catched in wpSetup() of CWObject */
               }
               ulOptions&=~HINTSENABLED;
             }// end if
             else {
-              if((hObject=WinQueryObject(chrPath))!=NULLHANDLE) {
+              if(hObject!=NULLHANDLE) {
                 WinSetObjectData(hObject,SETUP_ENABLEHINTS"=1");/* This is catched in wpSetup() of CWObject */
               }
               g_fHintsEnabled=TRUE;
@@ -542,7 +542,7 @@ static MRESULT EXPENTRY FileOptionDlgProc(HWND hwnd, ULONG msg, MPARAM mp1, MPAR
           case ID_ENABLEREXX:
             if(g_fRexxScriptsEnabled){
               g_fRexxScriptsEnabled=FALSE;
-              if((hObject=WinQueryObject(chrPath))!=NULLHANDLE) {
+              if(hObject!=NULLHANDLE) {
                 WinSetObjectData(hObject,SETUP_ENABLESCRIPTS"=0");/* This is catched in wpSetup() of CWObject */
               }
               ulOptions&=~REXXSCRIPTSENABLED;
@@ -550,50 +550,53 @@ static MRESULT EXPENTRY FileOptionDlgProc(HWND hwnd, ULONG msg, MPARAM mp1, MPAR
               WinEnableWindow(WinWindowFromID(hwnd, IDCB_FLDRINFOWINDOW), FALSE);
             }// end if
             else {
-              if((hObject=WinQueryObject(chrPath))!=NULLHANDLE) {
+              if(hObject!=NULLHANDLE) {
                 WinSetObjectData(hObject,SETUP_ENABLESCRIPTS"=1");/* This is catched in wpSetup() of CWObject */
               }
               g_fRexxScriptsEnabled=TRUE;
               ulOptions|=REXXSCRIPTSENABLED;
               WinEnableWindow(WinWindowFromID(hwnd, ID_ENABLEHINTS), TRUE);
               WinEnableWindow(WinWindowFromID(hwnd, IDCB_FLDRINFOWINDOW), TRUE);
-            }
-          
+            }          
             break;
           case FODLG_SHOWSIZE:
             if(g_fFileSizeEnabled){
               g_fFileSizeEnabled=FALSE;
-              if((hObject=WinQueryObject(chrPath))!=NULLHANDLE) {
-                WinSetObjectData(hObject,"ENABLESIZEITEM=0");
+              if(hObject!=NULLHANDLE) {
+                WinSetObjectData(hObject, SETUP_ENABLESIZEITEM"=0");
               }
               ulOptions&=~FILESIZEENABLED;
             }// end if
             else {
-              if((hObject=WinQueryObject(chrPath))!=NULLHANDLE) {
-                WinSetObjectData(hObject,"ENABLESIZEITEM=1");
+              if(hObject!=NULLHANDLE) {
+                WinSetObjectData(hObject, SETUP_ENABLESIZEITEM"=1");
               }
               g_fFileSizeEnabled=TRUE;
               ulOptions|=FILESIZEENABLED;
             }
-            /*				WinSendMsg(WinWindowFromID(hwnd, FODLG_SHOWSIZE),
-                            BM_SETCHECK,MPFROMSHORT(bFileSizeEnabled),(MPARAM)NULL);*/
             break;
           case ID_NOFORMATMENUE:
-            if(bNoFormatMenue){
-              if((hObject=WinQueryObject("<WP_DRIVE_C>"))!=NULLHANDLE) {
-                WinSetObjectData(hObject,"DISABLEFORMATMENU=0");
+            {
+              DosQuerySysInfo(QSV_BOOT_DRIVE, QSV_BOOT_DRIVE, &attrFound, sizeof(attrFound));
+              sprintf(chrPath,"<WP_DRIVE_%c>", 'A'+attrFound-1);
+              hObject=WinQueryObject(chrPath);
+
+              if(bNoFormatMenue){
+                if(hObject!=NULLHANDLE) {
+                  WinSetObjectData(hObject, SETUP_DISABLEFORMATMENU"=0");
+                }
+                bNoFormatMenue=FALSE;
+                ulOptions&=~NOFORMATMENUE;
+              }// end if
+              else{
+                if(hObject!=NULLHANDLE) {
+                  WinSetObjectData(hObject, SETUP_DISABLEFORMATMENU"=1");
+                }
+                bNoFormatMenue=TRUE;
+                ulOptions|=NOFORMATMENUE;
               }
-              bNoFormatMenue=FALSE;
-              ulOptions&=~NOFORMATMENUE;
-            }// end if
-            else{
-              if((hObject=WinQueryObject("<WP_DRIVE_C>"))!=NULLHANDLE) {
-                WinSetObjectData(hObject,"DISABLEFORMATMENU=1");
-              }
-              bNoFormatMenue=TRUE;
-              ulOptions|=NOFORMATMENUE;
+              break;
             }
-            break;
           case ID_CONTEXTMENUE:
             if(bGlobalMenuEnabled){
               bGlobalMenuEnabled=FALSE;
