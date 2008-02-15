@@ -64,8 +64,10 @@ nlsStrings.59='0d'x||'0a'x||'[31;1;m An error occured. WPS-Wizard is not instal
 nlsStrings.60='The WPS will be restarted now.'
 nlsStrings.61='Part 2 of installation runs during WPS start.'
 nlsStrings.62='Press <ENTER> to continue.'
+nlsStrings.63='Multimedia classes are not installed. This system configuration is not supported.'
+
 
 /* # of strings */
-nlsStrings.0=62
+nlsStrings.0=63
 
 return

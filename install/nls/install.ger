@@ -64,9 +64,11 @@ nlsStrings.60='Die WPS wird nun neu gestartet.'
 nlsStrings.61='Teil 2 der Installation findet statt wenn die WPS startet.'
 
 nlsStrings.62='<ENTER>, um fortzufahren.'
+nlsStrings.63='Multimedia-Klassen sind nicht installiert. Diese Systemkonfiguration wird nicht unterstÅtzt.'
+
 
 /* # of strings */
-nlsStrings.0=62
+nlsStrings.0=63
 
 return
 
