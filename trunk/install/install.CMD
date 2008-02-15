@@ -47,6 +47,22 @@ IF LENGTH(rc)>1 THEN rc=LEFT(rc, 1)
 if rc<>"1" THEN DO
 	/* First phase */
 
+	IF haveMMClasses()=0 THEN DO
+		/* No CWMM classes */
+		/* 'Multimedia classes are not installed. This system configuration is not supported.' */
+		/* nlsStrings.22='Press <ENTER> to quit.' */
+		SAY ''
+		SAY nlsStrings.63
+		say ''
+		say nlsStrings.22
+		say ''
+		say '>'
+		parse value SysCurPos() with aktzeile aktspalte
+		newposition=SysCurPos(aktzeile-1,2)
+		pull
+		exit
+	END
+
 	/* Welcome screen */
 	SAY ''
 	SAY nlsStrings.1 /* 'Be sure to have a backup of your INI-files!' */
@@ -606,6 +622,23 @@ parse value SysCurPos() with aktzeile aktspalte
 newposition=SysCurPos(aktzeile-1,2)
 pull
 exit
+
+
+/* Check if running on eCS1.2 or later. Will succeed
+ on Warp 4 with installed CWMM classes, too. */
+haveMMClasses: procedure
+
+  ret=SysQueryClassList('classes.')
+  found=0
+  DO cls=1 to classes.0
+	theclass=WORD(classes.cls, 1)
+	thePath=SUBWORD(classes.cls, 2);
+	IF TRANSLATE(theClass)='CWMMDATAFILE' THEN DO;
+		found=1	;
+		LEAVE;
+	END;
+  END;
+return found
 
 
 /**** The following subroutine was appended while building the distribution:
