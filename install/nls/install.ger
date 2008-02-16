@@ -1,7 +1,8 @@
 GetStrings:
-nlsStrings.1='Haben Sie Kopien ihrer INI-Dateien erstellt?'
-nlsStrings.2='Wenn nicht, sollten Sie jetzt abbrechen!'
-nlsStrings.3='<ENTER> zum Installieren oder Ctrl-c fÅr Abbruch.'
+nlsStrings.1='0d'x||'0a'x||'     --- WPS-Wizard wird nun installiert ---'||'0d'x||'0a'x
+nlsStrings.2='(Sie haben ein Desktop-Archiv erstellt?)'
+nlsStrings.3='Zum Start der Installation <i> eingeben. Jede andere Eingabe bricht ab.'
+
 nlsStrings.4='Aktuelles Verzeichnis ist '
 nlsStrings.5='Registriere Klasse '
 nlsStrings.6='Fehler beim Registrieren der Klasse '
@@ -66,9 +67,12 @@ nlsStrings.61='Teil 2 der Installation findet statt wenn die WPS startet.'
 nlsStrings.62='<ENTER>, um fortzufahren.'
 nlsStrings.63='Multimedia-Klassen sind nicht installiert. Diese Systemkonfiguration wird nicht unterstÅtzt.'
 
+nlsStrings.64="Es ist kein aktuelles Desktop-Backup vorhanden."||'0d'x||'0a'x||'0d'x||'0a'x||'[31;1;m'||"   Es wird empfohlen, ein solches Archiv vor der Installation zu erstellen."||'[0;m'
+nlsStrings.65="ôffnen Sie die 'Archivieren'-Seite in den Einstellungen der ArbeitsoberflÑche, aktivieren Sie die Archivieren-Funktion und starten Sie das System neu. Deaktivieren Sie die Archivieren-Funktion nach dem Neustart. Lesen Sie die vorhandenen Hilfe-Informationen." 
+nlsStrings.66='Geben Sie <y> ein, um Die Installation trotzdem zu starten (nicht empfohlen).'
 
 /* # of strings */
-nlsStrings.0=63
+nlsStrings.0=66
 
 return
 
