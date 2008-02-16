@@ -1,7 +1,7 @@
 GetStrings:
-nlsStrings.1='0d'x||'0a'x||'[31;1;m Be sure to have a backup of your INI-files![0;m'||'0d'x||'0a'x||'0d'x||'0a'x
-nlsStrings.2='If not abort NOW'
-nlsStrings.3='Press <ENTER> to install or Ctrl-c to abort.'
+nlsStrings.1='0d'x||'0a'x||'     --- About to install WPS-Wizard now ---'||'0d'x||'0a'x
+nlsStrings.2='(You did create a desktop backup, did you?)'
+nlsStrings.3='Enter <i> to install or any other key to abort.'
 nlsStrings.4='Current directory is '
 nlsStrings.5='Registering class '
 nlsStrings.6='Error while registering class '
@@ -65,9 +65,12 @@ nlsStrings.60='The WPS will be restarted now.'
 nlsStrings.61='Part 2 of installation runs during WPS start.'
 nlsStrings.62='Press <ENTER> to continue.'
 nlsStrings.63='Multimedia classes are not installed. This system configuration is not supported.'
-
+nlsStrings.64="There is no fresh desktop (WPS) backup available."||'0d'x||'0a'x||'0d'x||'0a'x||'[31;1;m'||"   It's recommended to create such a backup prior to installing."||'[0;m'
+nlsStrings.65="Go to the 'Archive' page in the settings of the desktop folder to enable archiving and restart. Be sure to disable archiving after startup is done. Read the provided help information." 
+nlsStrings.66='Enter <y> if you want to install anyway (not recommended).'
 
 /* # of strings */
-nlsStrings.0=63
+nlsStrings.0=66
+
 
 return
