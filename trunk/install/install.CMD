@@ -47,6 +47,8 @@ IF LENGTH(rc)>1 THEN rc=LEFT(rc, 1)
 if rc<>"1" THEN DO
 	/* First phase */
 
+	SAY ""
+
 	IF haveMMClasses()=0 THEN DO
 		/* No CWMM classes */
 		/* 'Multimedia classes are not installed. This system configuration is not supported.' */
@@ -63,17 +65,43 @@ if rc<>"1" THEN DO
 		exit
 	END
 
+
+	bootdrive=getBootDrive()
+
+	IF bootdrive<>'' THEN DO
+		archfile=bootdrive||"\OS2\ARCHIVES\ARCHIVES.$$$"
+
+		IF doesFileExist(archfile)=1 THEN DO
+			archdate=queryCreationDate(archfile)
+			diffdate=TRANSLATE("781245", DATE("U"),"12345678")-TRANSLATE("781245", archdate,"12345678")
+			IF diffdate>0 THEN DO
+				SAY nlsStrings.64 /* 'There is no fresh desktop (WPS) backup available...' */
+				SAY ""
+				SAY nlsStrings.65 /* 'Go to the 'Archive' page in the settings of the desktop folder...' */
+				say ''
+				SAY nlsStrings.66 /* 'Enter <y> if you want to install anyway (not recommended).' */
+				SAY ""
+				say '>'
+				parse value SysCurPos() with aktzeile aktspalte
+				newposition=SysCurPos(aktzeile-1,2)
+				PARSE pull in
+				IF TRANSLATE(in)<>'Y' THEN EXIT
+			END
+		END
+	END
+
 	/* Welcome screen */
 	SAY ''
-	SAY nlsStrings.1 /* 'Be sure to have a backup of your INI-files!' */
-	SAY nlsStrings.2 /* 'If not abort NOW' */
+	SAY nlsStrings.1 /* 'About to install WPS-Wizard now' */
+	/* SAY nlsStrings.2 */ /* '(You did create a desktop backup, did you?)' */
 	say ''
-	say nlsStrings.3 /* 'Press <ENTER> to install or Ctrl-c to abort.' */
+	say nlsStrings.3 /* 'Enter <i> to install or any other key to abort.' */
 	say ''
 	say '>'
 	parse value SysCurPos() with aktzeile aktspalte
 	newposition=SysCurPos(aktzeile-1,2)
-	pull
+	PARSE pull in
+	IF TRANSLATE(in)<>'I' THEN EXIT
 
 
 	/* Some cleanup... */
@@ -609,6 +637,7 @@ pull
 exit
 
 
+/*-------------------------------------------------------------------------*/
 unexpectedExit:
 
 rc=SysIni(, "WPSWizard", "installing", "DELETE:")
@@ -624,6 +653,7 @@ pull
 exit
 
 
+/*-------------------------------------------------------------------------*/
 /* Check if running on eCS1.2 or later. Will succeed
  on Warp 4 with installed CWMM classes, too. */
 haveMMClasses: procedure
@@ -640,7 +670,40 @@ haveMMClasses: procedure
   END;
 return found
 
+/*-------------------------------------------------------------------------*/
+doesFileExist: procedure
 
+IF STREAM(ARG(1),'c', 'query exists')<>'' THEN return 1
+
+return 0
+
+/*-------------------------------------------------------------------------*/
+/* returns the creation date in format month/day/year e.g. 02/15/08 */
+queryCreationDate: procedure
+
+rc= SYSFileTree(arg(1), file, 'F')
+
+if file.0=1 THEN DO
+	PARSE VAR file.1 dat rest
+
+	dat=RIGHT(dat, 8, 0)
+	drop file.
+	return dat
+END
+
+return ""
+
+/*-------------------------------------------------------------------------*/
+/* Query bootdrive */
+GetBootDrive: procedure
+parse upper value VALUE('PATH',,'OS2ENVIRONMENT') with '\OS2\INSTALL' -2 boot +2
+parse upper value VALUE('PATH',,'OS2ENVIRONMENT') with '\OS2\SYSTEM' -2 boot2 +2
+
+if boot=boot2 then return boot
+
+return ''
+
+/*-------------------------------------------------------------------------*/
 /**** The following subroutine was appended while building the distribution:
 
 GetStrings:
