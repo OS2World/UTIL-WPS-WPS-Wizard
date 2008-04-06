@@ -53,6 +53,13 @@ WHEN ARG(1)="/FILTERMENU" THEN DO
 	PARSE VALUE ARG(4) WITH hwndCnr fMulti ulMenuType ulView
 	EXIT (ARG(3))
 END
+WHEN ARG(1)="/OBJECTREADY" THEN DO
+	PARSE VALUE ARG(4) WITH ulCode refObject 
+	/* Supported ulCode: OR_NEW, OR_FROMCOPY, OR_FROMTEMPLATE
+	Return 0 to the WPS */
+
+	EXIT (0)
+END
 OTHERWISE
 	return ARG(3)
 END
