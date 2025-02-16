@@ -7,7 +7,9 @@ LICENSE
 
 COMPILE TOOLS
 ===============
-* 
+* icc
+* gcc
+* Cairo
  
 AUTHORS
 ===============
