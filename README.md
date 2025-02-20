@@ -7,7 +7,8 @@ LICENSE
 
 COMPILE TOOLS
 ===============
-* icc
+* icc (VAC 3.08)
+* DirectToSOM
 * gcc
 * Cairo
  
